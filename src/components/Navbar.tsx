@@ -24,10 +24,13 @@ export default function Navbar() {
         { href: '/', label: 'Home' },
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/settings', label: 'Settings' },
+        { href: '/admin', label: 'Admin Dashboard' },
+
       ]
     : [
         { href: '/', label: 'Home' },
         { href: '/login', label: 'Login' },
+        { href: '/register', label: 'Register' },
       ];
 
   return (
@@ -68,4 +71,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
