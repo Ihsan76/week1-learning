@@ -155,7 +155,7 @@ export default function DashboardPage() {
               <div className="text-xs text-slate-400 mb-3 space-y-1">
                 <p>{content.difficulty}: {course.difficulty[locale as 'ar' | 'en']}</p>
                 <p>{content.duration}: {course.duration}</p>
-                </p>
+              
               </div>
               <div className="mb-4">
                 <div className="flex justify-between mb-2">
