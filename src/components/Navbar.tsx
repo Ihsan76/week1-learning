@@ -40,6 +40,8 @@ export default function Navbar() {
     { href: '/dashboard', label: { ar: translations.nav.dashboard, en: enTranslations.nav.dashboard } },
     { href: '/admin', label: { ar: translations.nav.admin, en: enTranslations.nav.admin } },
     { href: '/settings', label: { ar: translations.nav.settings, en: enTranslations.nav.settings } },
+        { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
+    { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } }
   ];
 
   const navItemsGuest: NavItem[] = [
