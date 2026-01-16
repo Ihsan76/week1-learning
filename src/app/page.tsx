@@ -1,144 +1,117 @@
 // src/app/page.tsx
-
 'use client';
-
 import Link from 'next/link';
 import { useAuthStore } from '@/lib/store';
 
 export default function Home() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
+  // Technologies with icons and descriptions
+  const technologies = [
+    {
+      title: 'Next.js',
+      icon: '⚡',
+      description: 'React Framework متطور',
+      color: '#00bcd4',
+    },
+    {
+      title: 'Django',
+      icon: '🐍',
+      description: 'Python Web Framework',
+      color: '#4caf50',
+    },
+    {
+      title: 'React',
+      icon: '⚛️',
+      description: 'UI Library قوية',
+      color: '#61dafb',
+    },
+    {
+      title: 'TypeScript',
+      icon: '📘',
+      description: 'Type Safety',
+      color: '#3178c6',
+    },
+    {
+      title: 'APIs',
+      icon: '🔌',
+      description: 'RESTful Services',
+      color: '#ff9800',
+    },
+    {
+      title: 'Zustand',
+      icon: '📦',
+      description: 'State Management',
+      color: '#fff044',
+    },
+  ];
+
+  const features = [
+    { icon: '⚡', title: 'أداء عالي', description: 'Next.js مع Optimization' },
+    { icon: '🔒', title: 'آمن تماماً', description: 'Password hashing وحماية' },
+    { icon: '📊', title: 'واجهة احترافية', description: 'تصميم حديث جميل' },
+    { icon: '📱', title: 'Responsive', description: 'يعمل على جميع الأجهزة' },
+    { icon: '🔧', title: 'سهل التطوير', description: 'كود منظم وواضح' },
+    { icon: '📚', title: 'موثق بالكامل', description: 'شرح مفصل لكل شيء' },
+  ];
+
   return (
-    <div style={{ backgroundColor: '#0a0a0a', color: '#ededed', minHeight: '100vh' }}>
-      
-      {/* ═══════ NAVBAR ═══════ */}
-      
-      {/* ═══════ HERO SECTION ═══════ */}
-      <section style={{ padding: '4rem 2rem', textAlign: 'center', borderBottom: '1px solid #2a2a2a' }}>
-        <h1 style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ededed' }}>تعلم تطوير الويب 🌐</h1>
-        <p style={{ fontSize: '1.3rem', color: '#757575', marginBottom: '1rem' }}>منصة تعليمية متكاملة</p>
-        <p style={{ fontSize: '1.1rem', color: '#ededed', marginBottom: '1rem' }}>Next.js • Django • APIs</p>
-        <p style={{ fontSize: '1rem', color: '#757575', marginBottom: '2rem' }}>
-          🚀 جاهز لتحويل افكارك إلى مشاريع وتطبيقات محترفة
-        </p>
-        <Link href="/dashboard" style={{
-          backgroundColor: '#00bcd4',
-          color: '#0a0a0a',
-          padding: '0.75rem 1.5rem',
-          borderRadius: '6px',
-          textDecoration: 'none',
-          fontWeight: 'bold',
-          display: 'inline-block'
-        }}>
-          اذهب للداشبورد
-        </Link>
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800">
+      {/* Hero Section */}
+      <section className="section-hero">
+        <div className="hero-content">
+          <h1 className="hero-title">تعلم تطوير الويب 🌐</h1>
+          <p className="hero-subtitle">منصة تعليمية متكاملة</p>
+          <p className="hero-text">Next.js • Django • APIs</p>
+          <p className="hero-description">🚀 جاهز لتحويل افكارك إلى مشاريع وتطبيقات محترفة</p>
+          <Link href="/dashboard" className="btn btn-primary">
+            اذهب للداشبورد
+          </Link>
+        </div>
       </section>
 
-      {/* ═══════ TECHNOLOGIES SECTION ═══════ */}
-      <section style={{ padding: '3rem 2rem', borderBottom: '1px solid #2a2a2a' }}>
-        <h2 style={{ fontSize: '2.5rem', textAlign: 'center', marginBottom: '2rem', color: '#ededed' }}>
-          التقنيات المستخدمة 💻
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
-          {[
-            { icon: 'N', title: 'Next.js', desc: 'React Framework متطور' },
-            { icon: 'D', title: 'Django', desc: 'Python Web Framework' },
-            { icon: 'R', title: 'React', desc: 'UI Library قوية' },
-            { icon: 'Z', title: 'Zustand', desc: 'State Management' },
-            { icon: 'T', title: 'TypeScript', desc: 'Type Safety' },
-            { icon: 'A', title: 'APIs', desc: 'RESTful Services' },
-          ].map((tech, i) => (
-            <div key={i} style={{
-              backgroundColor: 'rgba(237, 237, 237, 0.05)',
-              border: '1px solid #2a2a2a',
-              borderRadius: '8px',
-              padding: '1.5rem',
-              textAlign: 'center',
-              transition: 'all 0.3s ease',
-            }} onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#00bcd4';
-              e.currentTarget.style.transform = 'translateY(-4px)';
-            }} onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = '#2a2a2a';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{tech.icon}</div>
-              <h3 style={{ fontSize: '1.3rem', color: '#ededed', marginBottom: '0.5rem' }}>{tech.title}</h3>
-              <p style={{ color: '#757575', fontSize: '0.95rem' }}>{tech.desc}</p>
+      {/* Technologies Section */}
+      <section className="section">
+        <h2 className="section-title">التقنيات المستخدمة 💻</h2>
+        <div className="tech-grid">
+          {technologies.map((tech, i) => (
+            <div key={i} className="tech-card" style={{ '--color': tech.color } as any}>
+              <div className="tech-icon">{tech.icon}</div>
+              <h3 className="tech-title">{tech.title}</h3>
+              <p className="tech-description">{tech.description}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ═══════ FEATURES SECTION ═══════ */}
-      <section style={{ padding: '3rem 2rem', borderBottom: '1px solid #2a2a2a' }}>
-        <h2 style={{ fontSize: '2.5rem', textAlign: 'center', marginBottom: '2rem', color: '#ededed' }}>
-          المميزات الرئيسية ⭐
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
-          <div>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚡</div>
-            <h3 style={{ fontSize: '1.2rem', color: '#ededed', marginBottom: '0.5rem' }}>أداء عالي</h3>
-            <p style={{ color: '#757575' }}>Next.js مع Optimization</p>
-          </div>
-          <div>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔒</div>
-            <h3 style={{ fontSize: '1.2rem', color: '#ededed', marginBottom: '0.5rem' }}>آمن تماماً</h3>
-            <p style={{ color: '#757575' }}>Password hashing وحماية</p>
-          </div>
-          <div>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📊</div>
-            <h3 style={{ fontSize: '1.2rem', color: '#ededed', marginBottom: '0.5rem' }}>واجهة احترافية</h3>
-            <p style={{ color: '#757575' }}>تصميم حديث جميل</p>
-          </div>
-          <div>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📱</div>
-            <h3 style={{ fontSize: '1.2rem', color: '#ededed', marginBottom: '0.5rem' }}>Responsive</h3>
-            <p style={{ color: '#757575' }}>يعمل على جميع الأجهزة</p>
-          </div>
-          <div>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔧</div>
-            <h3 style={{ fontSize: '1.2rem', color: '#ededed', marginBottom: '0.5rem' }}>سهل التطوير</h3>
-            <p style={{ color: '#757575' }}>كود منظم وواضح</p>
-          </div>
-          <div>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📚</div>
-            <h3 style={{ fontSize: '1.2rem', color: '#ededed', marginBottom: '0.5rem' }}>موثق بالكامل</h3>
-            <p style={{ color: '#757575' }}>شرح مفصل لكل شيء</p>
-          </div>
+      {/* Features Section */}
+      <section className="section">
+        <h2 className="section-title">المميزات الرئيسية ⭐</h2>
+        <div className="features-grid">
+          {features.map((feature, i) => (
+            <div key={i} className="feature-card">
+              <div className="feature-icon">{feature.icon}</div>
+              <h3 className="feature-title">{feature.title}</h3>
+              <p className="feature-text">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ═══════ CTA SECTION ═══════ */}
-      <section style={{ padding: '3rem 2rem', textAlign: 'center', borderBottom: '1px solid #2a2a2a' }}>
-        <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#ededed' }}>جاهز للبدء؟ 🎯</h2>
-        <p style={{ fontSize: '1.1rem', color: '#757575', marginBottom: '2rem' }}>
-          انضم لآلاف المتعلمين الذين بدؤوا رحلتهم معنا
-        </p>
-        <Link href="/dashboard" style={{
-          backgroundColor: '#00bcd4',
-          color: '#0a0a0a',
-          padding: '0.75rem 1.5rem',
-          borderRadius: '6px',
-          textDecoration: 'none',
-          fontWeight: 'bold',
-          display: 'inline-block'
-        }}>
+      {/* CTA Section */}
+      <section className="section section-cta">
+        <h2 className="section-title">جاهز للبدء؟ 🎯</h2>
+        <p className="section-subtitle">انضم لآلاف المتعلمين الذين بدؤوا رحلتهم معنا</p>
+        <Link href="/dashboard" className="btn btn-primary btn-large">
           استمر في التعلم
         </Link>
       </section>
 
-      {/* ═══════ FOOTER ═══════ */}
-      <footer style={{
-        padding: '2rem',
-        textAlign: 'center',
-        color: '#757575',
-        borderTop: '1px solid #2a2a2a'
-      }}>
-        <p>&copy; 2026 Week1 Learning - جميع الحقوق محفوظة</p>
-        <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>تم التطوير بـ ❤️ لتعليم الويب الحديث</p>
+      {/* Footer */}
+      <footer className="footer">
+        <p>© 2026 Week1 Learning - جميع الحقوق محفوظة</p>
+        <p className="footer-sub">تم التطوير بـ ❤️ لتعليم الويب الحديث</p>
       </footer>
-
     </div>
   );
 }
