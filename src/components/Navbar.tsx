@@ -45,11 +45,11 @@ export default function Navbar() {
   const translations = locale === 'ar' ? arTranslations : enTranslations;
 
   const navItemsLoggedIn: NavItem[] = [
-    { href: '/', label: { ar: translations.nav.home, en: enTranslations.nav.home } },
-    { href: '/dashboard', label: { ar: translations.nav.Dashboard, en: 'My Dashboard', en: enTranslations.nav.dashboard } },
-    { href: '/settings', label: { ar: translations.nav.settings, en: 'My Settings', en: enTranslations.nav.settings } },
-    { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
-    { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } },
+    { href: '/', label: { ar: translations.nav.home, en: translations.nav.home } },
+    { href: '/dashboard', label: { ar: translations.nav.dashboard,  en: translations.nav.dashboard } },
+    { href: '/settings', label: { ar: translations.nav.settings,  en: translations.nav.settings } },
+    { href: '/weeks', label: { ar: translations.nav.weeks, en: enTranslations.nav.weeks } },
+    { href: '/resources', label: { ar: translations.nav.resources, en: enTranslations.nav.resources } },
   ];
 
   const adminItems: AdminItem[] = [
