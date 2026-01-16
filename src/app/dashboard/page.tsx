@@ -68,7 +68,7 @@ const mockCourses = [
     title: { ar: 'TypeScript مع React', en: 'TypeScript with React' },
     description: { ar: 'استخدام TypeScript مع React', en: 'Using TypeScript with React' },
     progress: 0,
-    160
+    difficulty: 
     { ar: 'متوسط', en: 'Intermediate' },
     duration: '6 weeks',
     status: 'not_started',
