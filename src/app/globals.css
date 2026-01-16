@@ -639,3 +639,76 @@ table button {
 table button:hover {
   background-color: rgb(255, 0, 85);
 }
+
+
+/* ========== NAVBAR STYLES ========== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  border-bottom: 2px solid var(--primary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 188, 212, 0.1);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links li {
+  margin: 0;
+}
+
+/* Main navbar links - wider padding for better spacing */
+.nav-links > a,
+.nav-links > li > a {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-links > a:hover,
+.nav-links > li > a:hover {
+  background-color: rgba(0, 188, 212, 0.1);
+  border-radius: 4px;
+}
+
+/* Dropdown menu styles - more compact padding */
+.nav-menu,
+.admin-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: rgba(15, 118, 110, 0.95);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  min-width: 200px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.nav-menu a,
+.admin-menu a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-menu a:hover,
+.admin-menu a:hover {
+  background-color: rgba(0, 188, 212, 0.2);
+}
