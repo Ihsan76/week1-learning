@@ -13,6 +13,12 @@ interface NavItem {
   label: { ar: string; en: string };
 }
 
+interface AdminItem {
+  href: string;
+  label: { ar: string; en: string };
+  icon?: string;
+}
+
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -21,10 +27,13 @@ export default function Navbar() {
   const locale = useLocaleStore((state) => state.locale);
   const toggleLocale = useLocaleStore((state) => state.toggleLocale);
   const [mounted, setMounted] = useState(false);
+  const [showAdminDropdown, setShowAdminDropdown] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  if (!mounted) return null;
 
   const isActive = (href: string) => pathname === href;
 
@@ -33,69 +42,101 @@ export default function Navbar() {
     router.push('/login');
   };
 
-    const translations = locale === 'ar' ? arTranslations : enTranslations;
+  const translations = locale === 'ar' ? arTranslations : enTranslations;
 
   const navItemsLoggedIn: NavItem[] = [
     { href: '/', label: { ar: translations.nav.home, en: enTranslations.nav.home } },
     { href: '/dashboard', label: { ar: translations.nav.dashboard, en: enTranslations.nav.dashboard } },
-    { href: '/admin', label: { ar: translations.nav.admin, en: enTranslations.nav.admin } },
-        { href: '/admin/users', label: { ar: translations.nav.users, en: enTranslations.nav.users } },
-        { href: '/admin/settings', label: { ar: translations.nav.settings, en: enTranslations.nav.settings } },
-        { href: '/admin/reports', label: { ar: translations.nav.reports, en: enTranslations.nav.reports } },
-        { href: '/admin/content', label: { ar: translations.nav.content, en: enTranslations.nav.content } },
-   { href: '/settings', label: { ar: translations.nav.settings, en: enTranslations.nav.settings } },
-        { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
-    { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } }
-  ];
-
-  const navItemsGuest: NavItem[] = [
-    { href: '/', label: { ar: arTranslations.nav.home, en: enTranslations.nav.home } },
-    { href: '/login', label: { ar: arTranslations.nav.login, en: enTranslations.nav.login } },
-    { href: '/register', label: { ar: arTranslations.nav.register, en: enTranslations.nav.register } },
+    { href: '/settings', label: { ar: translations.nav.settings, en: enTranslations.nav.settings } },
     { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
     { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } },
   ];
 
-  const navItems = isLoggedIn ? navItemsLoggedIn
-    : navItemsGuest;
+  const adminItems: AdminItem[] = [
+    { href: '/admin', label: { ar: 'لوحة التحكم', en: 'Dashboard' }, icon: '📊' },
+    { href: '/admin/users', label: { ar: 'إدارة المستخدمين', en: 'Users Management' }, icon: '👥' },
+    { href: '/admin/content', label: { ar: 'إدارة المحتوى', en: 'Content Management' }, icon: '📝' },
+    { href: '/admin/settings', label: { ar: 'الإعدادات', en: 'Settings' }, icon: '⚙️' },
+    { href: '/admin/reports', label: { ar: 'التقارير', en: 'Reports' }, icon: '📈' },
+  ];
 
-  if (!mounted) return null;
+  const navItemsGuest: NavItem[] = [
+    { href: '/', label: { ar: translations.nav.home, en: enTranslations.nav.home } },
+    { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
+    { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } },
+  ];
 
   return (
-    <nav className="navbar" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
-      <div className="navbar-brand">
-        <span>🔨</span>
-        <Link href="/">Week1 Learning</Link>
-      </div>
-      <ul className="nav-links">
-        {navItems.map((item) => (
-          <li key={item.href}>
-            <Link
-              href={item.href}
-              className={isActive(item.href) ? 'active' : ''}
-            >
-              {item.label[locale]}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      {isLoggedIn && (
-        <li>
-          <button
-            onClick={handleLogout}
-            className="btn-logout"
-          >
-            {locale === 'ar' ? 'خروج' : 'Logout'}
+    <nav className="navbar">
+      <div className="navbar-container">
+        {/* Logo */}
+        <Link href="/" className="navbar-logo">
+          <span className="logo-icon">👋</span>
+          <span className="logo-text">Week1 Learning</span>
+        </Link>
+
+        {/* Navigation Items */}
+        <div className="nav-items">
+          {isLoggedIn
+            ? navItemsLoggedIn.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`nav-link ${isActive(item.href) ? 'active' : ''}`}
+                >
+                  {item.label[locale as 'ar' | 'en']}
+                </Link>
+              ))
+            : navItemsGuest.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`nav-link ${isActive(item.href) ? 'active' : ''}`}
+                >
+                  {item.label[locale as 'ar' | 'en']}
+                </Link>
+              ))}
+
+          {/* Admin Dropdown */}
+          {isLoggedIn && (
+            <div className="nav-dropdown-wrapper">
+              <button
+                className="nav-link admin-toggle"
+                onClick={() => setShowAdminDropdown(!showAdminDropdown)}
+              >
+                {translations.nav.admin}
+              </button>
+              {showAdminDropdown && (
+                <div className="nav-dropdown-menu">
+                  {adminItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`dropdown-item ${isActive(item.href) ? 'active' : ''}`}
+                      onClick={() => setShowAdminDropdown(false)}
+                    >
+                      {item.icon && <span className="dropdown-icon">{item.icon}</span>}
+                      <span>{item.label[locale as 'ar' | 'en']}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Right Actions */}
+        <div className="nav-actions">
+          {isLoggedIn && (
+            <button onClick={handleLogout} className="btn-logout">
+              {translations.nav.logout || 'Logout'}
+            </button>
+          )}
+          <button onClick={toggleLocale} className="btn-language" aria-label="Toggle language">
+            {locale === 'ar' ? '😄 EN' : '🌠 AR'}
           </button>
-        </li>
-      )}
-      <button
-        onClick={toggleLocale}
-        className="btn-language"
-        aria-label={`Switch to ${locale === 'ar' ? 'English' : 'Arabic'}`}
-      >
-        {locale === 'ar' ? '🇪🇸 EN' : '🇸🇦 AR'}
-      </button>
+        </div>
+      </div>
     </nav>
   );
 }
