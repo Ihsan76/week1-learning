@@ -5,6 +5,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
 import { useLocaleStore } from '@/lib/localeStore';
 import { useEffect, useState } from 'react';
+import arTranslations from '@/locales/ar.json';
+import enTranslations from '@/locales/en.json';
 
 interface NavItem {
   href: string;
@@ -31,22 +33,25 @@ export default function Navbar() {
     router.push('/login');
   };
 
+    const translations = locale === 'ar' ? arTranslations : enTranslations;
+
   const navItemsLoggedIn: NavItem[] = [
-    { href: '/', label: { ar: 'الرئيسية', en: 'Home' } },
-    { href: '/dashboard', label: { ar: 'لوحتي', en: 'Dashboard' } },
-    { href: '/admin', label: { ar: 'إدارة', en: 'Admin' } },
-    { href: '/settings', label: { ar: 'الإعدادات', en: 'Settings' } },
+    { href: '/', label: { ar: translations.nav.home, en: enTranslations.nav.home } },
+    { href: '/dashboard', label: { ar: translations.nav.dashboard, en: enTranslations.nav.dashboard } },
+    { href: '/admin', label: { ar: translations.nav.admin, en: enTranslations.nav.admin } },
+    { href: '/settings', label: { ar: translations.nav.settings, en: enTranslations.nav.settings } },
   ];
 
   const navItemsGuest: NavItem[] = [
-    { href: '/', label: { ar: 'الرئيسية', en: 'Home' } },
-    { href: '/login', label: { ar: 'دخول', en: 'Login' } },
-    { href: '/register', label: { ar: 'تسجيل', en: 'Register' } },
-      { href: '/weeks', label: { ar: 'الأسابيع', en: 'Weeks' } },
-  { href: '/resources', label: { ar: 'الموارد', en: 'Resources' } },
+    { href: '/', label: { ar: arTranslations.nav.home, en: enTranslations.nav.home } },
+    { href: '/login', label: { ar: arTranslations.nav.login, en: enTranslations.nav.login } },
+    { href: '/register', label: { ar: arTranslations.nav.register, en: enTranslations.nav.register } },
+    { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
+    { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } },
   ];
 
-  const navItems = isLoggedIn ? navItemsLoggedIn : navItemsGuest;
+  const navItems = isLoggedIn ? 52
+    : navItemsGuest;
 
   if (!mounted) return null;
 
