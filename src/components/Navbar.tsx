@@ -42,6 +42,8 @@ export default function Navbar() {
     { href: '/', label: { ar: 'الرئيسية', en: 'Home' } },
     { href: '/login', label: { ar: 'دخول', en: 'Login' } },
     { href: '/register', label: { ar: 'تسجيل', en: 'Register' } },
+      { href: '/weeks', label: { ar: 'الأسابيع', en: 'Weeks' } },
+  { href: '/resources', label: { ar: 'الموارد', en: 'Resources' } },
   ];
 
   const navItems = isLoggedIn ? navItemsLoggedIn : navItemsGuest;
