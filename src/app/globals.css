@@ -717,3 +717,58 @@ table button:hover {
 .admin-menu a:hover {
   background-color: rgba(0, 188, 212, 0.2);
 }
+
+
+/* ========== NAVBAR CONTAINER AND NAV ITEMS ========== */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+.nav-items {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-items > a,
+.nav-items > li > a {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  color: var(--foreground);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-items > a:hover,
+.nav-items > li > a:hover {
+  background-color: rgba(0, 188, 212, 0.1);
+  color: var(--primary);
+  border-radius: 6px;
+}
+
+.nav-items > a.active,
+.nav-items > li > a.active {
+  background-color: var(--primary);
+  color: var(--background);
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
