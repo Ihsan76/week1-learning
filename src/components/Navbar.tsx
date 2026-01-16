@@ -50,7 +50,7 @@ export default function Navbar() {
     { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } },
   ];
 
-  const navItems = isLoggedIn ? 52
+  const navItems = isLoggedIn ? navItemsLoggedIn
     : navItemsGuest;
 
   if (!mounted) return null;
