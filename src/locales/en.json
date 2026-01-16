@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register"
+  },
+  "hero": {
+    "title": "Learn Web Development 🌐",
+    "subtitle": "Integrated Learning Platform",
+    "description": "🚀 Ready to transform your ideas into professional projects and applications",
+    "cta": "Go to Dashboard"
+  },
+  "technologies": {
+    "title": "Technologies Used 💻",
+    "nextjs": "Advanced React Framework",
+    "django": "Python Web Framework",
+    "react": "Powerful UI Library",
+    "typescript": "Type Safety",
+    "apis": "RESTful Services",
+    "zustand": "State Management"
+  },
+  "features": {
+    "title": "Key Features ⭐",
+    "performance": "High Performance",
+    "performance_desc": "Next.js with Optimization",
+    "security": "Completely Secure",
+    "security_desc": "Password hashing and protection",
+    "ui": "Professional Interface",
+    "ui_desc": "Modern and beautiful design",
+    "responsive": "Responsive",
+    "responsive_desc": "Works on all devices",
+    "development": "Easy Development",
+    "development_desc": "Organized and clear code",
+    "documentation": "Fully Documented",
+    "documentation_desc": "Detailed explanation for everything"
+  },
+  "cta": {
+    "title": "Ready to Start? 🎯",
+    "subtitle": "Join thousands of learners who have started their journey with us",
+    "button": "Continue Learning"
+  },
+  "footer": {
+    "copyright": "© 2026 Week1 Learning - All rights reserved",
+    "developed": "Developed with ❤️ for modern web teaching"
+  }
+}
