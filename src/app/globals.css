@@ -347,3 +347,35 @@ footer a {
 .gap-4 {
   gap: 2rem;
 }
+
+/* Logout Button Styles */
+.btn-logout {
+  background-color: #ff4081;
+  color: var(--background);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+  background-color: #f50057;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
+}
+
+.btn-logout:active {
+  transform: translateY(0);
+}
+
+/* RTL Support for Navigation */
+[dir="rtl"] .navbar {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .nav-links {
+  flex-direction: row-reverse;
+  gap: 2rem;
+}
