@@ -12,31 +12,7 @@ export default function Home() {
     <div style={{ backgroundColor: '#0a0a0a', color: '#ededed', minHeight: '100vh' }}>
       
       {/* ═══════ NAVBAR ═══════ */}
-      <nav style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '1rem 2rem',
-        borderBottom: '1px solid #2a2a2a',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-      }}>
-        <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-          🚀 <span style={{ color: '#00bcd4' }}>Week1</span> Learning
-        </div>
-        <ul style={{ display: 'flex', listStyle: 'none', gap: '2rem' }}>
-          <li><Link href="/" style={{ color: '#ededed', textDecoration: 'none' }}>الرئيسية</Link></li>
-          {isLoggedIn && (
-            <>
-              <li><Link href="/dashboard" style={{ color: '#ededed', textDecoration: 'none' }}>لوحتي</Link></li>
-              <li><Link href="/admin" style={{ color: '#ededed', textDecoration: 'none' }}>إدارة</Link></li>
-              <li><Link href="/settings" style={{ color: '#ededed', textDecoration: 'none' }}>الإعدادات</Link></li>
-            </>
-          )}
-        </ul>
-      </nav>
-
+      
       {/* ═══════ HERO SECTION ═══════ */}
       <section style={{ padding: '4rem 2rem', textAlign: 'center', borderBottom: '1px solid #2a2a2a' }}>
         <h1 style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ededed' }}>تعلم تطوير الويب 🌐</h1>
