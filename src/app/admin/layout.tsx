@@ -58,8 +58,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     
     <div className="flex min-h-screen bg-slate-900">
       {/* Sidebar */}
-              <AdminSidebar />
-      <aside className="w-64 bg-slate-800 border-r border-slate-700 p-6">
+<AdminSidebar />
+                           <aside className="w-64 bg-slate-800 border-r border-slate-700 p-6">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white mb-2">킡لوحة البيانات</h2>
           <p className="text-sm text-slate-400">Admin Panel</p>
