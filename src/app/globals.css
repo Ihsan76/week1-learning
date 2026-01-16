@@ -688,6 +688,8 @@ table button:hover {
 /* Dropdown menu styles - more compact padding */
 .nav-menu,
 .admin-menu {
+   display: flex;
+ flex-direction: column;
    gap: 0.25rem;
   position: absolute;
   top: 100%;
