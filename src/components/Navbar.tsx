@@ -1,15 +1,17 @@
-// src/components/Navbar.tsx
 'use client';
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
+import { useLocaleStore } from '@/lib/localeStore';
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const logout = useAuthStore((state) => state.logout);
+  const locale = useLocaleStore((state) => state.locale);
+  const toggleLocale = useLocaleStore((state) => state.toggleLocale);
 
   const isActive = (href: string) => pathname === href;
 
@@ -35,7 +37,7 @@ export default function Navbar() {
   return (
     <nav className="navbar" dir="rtl">
       <div className="navbar-brand">
-        <span>🚀</span>
+        <span>🔨</span>
         <Link href="/">Week1 Learning</Link>
       </div>
       <ul className="nav-links">
@@ -49,17 +51,24 @@ export default function Navbar() {
             </Link>
           </li>
         ))}
-        {isLoggedIn && (
-          <li>
-            <button
-              onClick={handleLogout}
-              className="btn-logout"
-            >
-              خروج
-            </button>
-          </li>
-        )}
       </ul>
+      {isLoggedIn && (
+        <li>
+          <button
+            onClick={handleLogout}
+            className="btn-logout"
+          >
+            خروج
+          </button>
+        </li>
+      )}
+      <button
+        onClick={toggleLocale}
+        className="btn-language"
+        aria-label={`Switch to ${locale === 'ar' ? 'English' : 'Arabic'}`}
+      >
+        {locale === 'ar' ? '🇪🇸 EN' : '🇸🇦 AR'}
+      </button>
     </nav>
   );
 }
