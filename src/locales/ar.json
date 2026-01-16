@@ -49,4 +49,17 @@
     "copyright": "© 2026 Week1 Learning - جميع الحقوق محفوظة",
     "developed": "تم التطوير بـ ❤️ لتعليم الويب الحديث"
   }
+    ,
+  "course": {
+    "difficulty": "المستوى",
+    "duration": "المدة",
+    "startNow": "ابدأ الآن",
+    "startedCourses": "الدورات المبدوءة",
+    "completedCourses": "الدورات المكتملة",
+    "studyHours": "ساعات الدراسة",
+    "intermediate": "متوسط",
+    "beginner": "مبتدئ",
+    "advanced": "متقدم",
+    "recent": "الدروس الحديثة"
+  }
 }
