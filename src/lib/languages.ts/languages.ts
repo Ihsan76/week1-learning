@@ -78,4 +78,23 @@ export function getEnabledLanguages(): LanguageConfig[] {
 export function isRTL(code: string): boolean {
   const lang = getLanguageConfig(code);
   return lang?.direction === 'rtl' ? true : false;
+
+  // Translation keys for i18n
+export const TRANSLATION_KEYS = {
+  nav: {
+    home: 'nav.home',
+    dashboard: 'nav.dashboard',
+    admin: 'nav.admin',
+    settings: 'nav.settings',
+    users: 'nav.users',
+    reports: 'nav.reports',
+    content: 'nav.content',
+    languages: 'nav.languages',
+    weeks: 'nav.weeks',
+    resources: 'nav.resources',
+    logout: 'nav.logout',
+    login: 'nav.login',
+    register: 'nav.register',
+  },
+};
 }
