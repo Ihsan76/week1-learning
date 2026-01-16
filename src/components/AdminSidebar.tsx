@@ -21,7 +21,7 @@ export default function AdminSidebar() {
     {
       href: '/admin',
 label: { ar: '📊 لوحة التحكم الإدارية', en: 'Admin Dashboard' }      },
-  icon: '📊''📊'
+  iconicon: '📊'
     },
     {
       href: '/admin/users',
