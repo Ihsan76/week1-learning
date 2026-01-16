@@ -39,6 +39,11 @@ export default function Navbar() {
     { href: '/', label: { ar: translations.nav.home, en: enTranslations.nav.home } },
     { href: '/dashboard', label: { ar: translations.nav.dashboard, en: enTranslations.nav.dashboard } },
     { href: '/admin', label: { ar: translations.nav.admin, en: enTranslations.nav.admin } },
+        { href: '/admin/users', label: { ar: translations.nav.users, en: enTranslations.nav.users } },
+        { href: '/admin/settings', label: { ar: translations.nav.settings, en: enTranslations.nav.settings } },
+        { href: '/admin/reports', label: { ar: translations.nav.reports, en: enTranslations.nav.reports } },
+        { href: '/admin/content', label: { ar: translations.nav.content, en: enTranslations.nav.content } },
+        { href: '/admin/languages', label: { ar: translations.nav.languages, en: enTranslations.nav.languages } },
     { href: '/settings', label: { ar: translations.nav.settings, en: enTranslations.nav.settings } },
         { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
     { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } }
