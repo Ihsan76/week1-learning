@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
-import { SUPPORTED_LANGUAGES, TRANSLATION_KEYS, LanguageConfig, isRTL } from '@/lib/languages';
 import arTranslations from '@/locales/ar.json';
 import enTranslations from '@/locales/en.json';
 
