@@ -68,7 +68,8 @@ const mockCourses = [
     title: { ar: 'TypeScript مع React', en: 'TypeScript with React' },
     description: { ar: 'استخدام TypeScript مع React', en: 'Using TypeScript with React' },
     progress: 0,
-    difficulty: { ar: 'متوسط', en: 'Intermediate' },
+    160
+    { ar: 'متوسط', en: 'Intermediate' },
     duration: '6 weeks',
     status: 'not_started',
   },
@@ -152,8 +153,9 @@ export default function DashboardPage() {
               <h3 className="feature-title">{course.title[locale as 'ar' | 'en']}</h3>
               <p className="feature-text mb-4">{course.description[locale as 'ar' | 'en']}</p>
               <div className="text-xs text-slate-400 mb-3 space-y-1">
-                <p>Difficulty: {course.difficulty[locale as 'ar' | 'en']}</p>
-                <p>Duration: {course.duration}</p>
+                <p>{content.difficulty}: {course.difficulty[locale as 'ar' | 'en']}</p>
+                <p>{content.duration}: {course.duration}</p>
+                </p>
               </div>
               <div className="mb-4">
                 <div className="flex justify-between mb-2">
