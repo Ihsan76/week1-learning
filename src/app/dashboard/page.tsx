@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuthStore } from '@/lib/store';
 import { useLocaleStore } from '@/lib/localeStore';
 
@@ -22,6 +23,7 @@ const getContent = (locale: string) => {
       difficulty: 'مستوى الصعوبة',
       duration: 'المدة',
       logout: 'تسجيل الخروج',
+            viewWeekOne: 'عرض الأسبوع الأول',
     };
   }
   return {
@@ -172,6 +174,13 @@ export default function DashboardPage() {
           ))}
         </div>
       </section>
-    </div>
+    
+        {/* Week 1 Link */}
+        <div className="mt-12 text-center">
+          <Link href="/week-1" className="btn-primary px-8 py-3 inline-block rounded-lg font-semibold">
+            {content.viewWeekOne || 'View Week 1 Curriculum'}
+          </Link>
+        </div>
+</div>
   );
 }
