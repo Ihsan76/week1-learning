@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Week1 Learning",
-  description: "منصة تعليمية متكاملة لتعلم تطوير الويب",
+  description: "منصة تعليمية متكاملة لتعليم تطوير الويب",
 };
 
 export default function RootLayout({
