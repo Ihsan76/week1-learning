@@ -20,8 +20,8 @@ export default function AdminSidebar() {
   const sidebarItems: SidebarItem[] = [
     {
       href: '/admin',
-label: { ar: '📊 لوحة التحكم الإدارية', en: 'Admin Dashboard' }      ,
-  iconicon: '📊'
+      label: { ar: '📊 لوحة التحكم الإدارية', en: 'Admin Dashboard' }      ,
+      icon: '📊',
     },
     {
       href: '/admin/users',
