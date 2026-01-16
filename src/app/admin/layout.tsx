@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
 import Link from 'next/link';
-import AdminSidebar from '@/components/AdminSidebar';
-
+import AdminSidebar from '@/components/AdminSiderba'; ';
 const ADMIN_MENU_ITEMS = [
   {
     name: 'ar',
@@ -58,7 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     
     <div className="flex min-h-screen bg-slate-900">
       {/* Sidebar */}
-<AdminSidebar />
+              <AdminSidebar />
                            <aside className="w-64 bg-slate-800 border-r border-slate-700 p-6">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white mb-2">킡لوحة البيانات</h2>
