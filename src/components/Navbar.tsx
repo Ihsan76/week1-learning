@@ -46,8 +46,8 @@ export default function Navbar() {
 
   const navItemsLoggedIn: NavItem[] = [
     { href: '/', label: { ar: translations.nav.home, en: enTranslations.nav.home } },
-    { href: '/dashboard', label: { ar: translations.nav.dashboard, en: enTranslations.nav.dashboard } },
-    { href: '/settings', label: { ar: translations.nav.settings, en: enTranslations.nav.settings } },
+    { href: '/dashboard', label: { ar: translations.nav.Dashboard', en: 'My Dashboard, en: enTranslations.nav.dashboard } },
+    { href: '/settings', label: { ar: ar: translations.nav.settings, en: 'My Settings.nav.settings, en: enTranslations.nav.settings } },
     { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
     { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } },
   ];
