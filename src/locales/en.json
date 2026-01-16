@@ -7,6 +7,11 @@
     "logout": "Logout",
     "login": "Login",
     "register": "Register",
+        "users": "Users Management",
+        "settings": "Settings",
+        "reports": "Reports",
+        "content": "Content Management",
+        "languages": "Languages",
   "weeks": "Weeks",
   "resources": "Resources"
   },
