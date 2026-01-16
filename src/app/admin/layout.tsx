@@ -82,7 +82,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           ))}
         </nav>
 
-        <div className="mt-8 pt-6 border-t border-slate-700">
+          <AdminSidebar />
+                             <div className="mt-8 pt-6 border-t border-slate-700">
           <button className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
             تسجيل الخروج
           </button>
