@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
 import Link from 'next/link';
-import AdminSidebar from '@/components/AdminSiderba'; ';
+import AdminSidebar from '@/components/AdminSidebar';
 const ADMIN_MENU_ITEMS = [
   {
     name: 'ar',
