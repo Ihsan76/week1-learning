@@ -101,7 +101,7 @@ export default function Navbar() {
           {isLoggedIn && (
             <div className="nav-dropdown-wrapper">
               <button
-                className="nav-link admin-toggle"
+                className="nav-link2 admin-toggle"
                 onClick={() => setShowAdminDropdown(!showAdminDropdown)}
               >
                 {translations.nav.admin}
