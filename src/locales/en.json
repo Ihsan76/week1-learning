@@ -6,7 +6,9 @@
     "settings": "Settings",
     "logout": "Logout",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+  "weeks": "Weeks",
+  "resources": "Resources"
   },
   "hero": {
     "title": "Learn Web Development 🌐",
