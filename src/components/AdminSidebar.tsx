@@ -30,7 +30,8 @@ export default function AdminSidebar() {
     },
     {
       href: '/admin/settings',
-label: { ar: '⚙️ إعدادات النظام', en: 'System Settings' }      icon: '⚙️',
+      label: { ar: '⚙️ إعدادات النظام', en: 'System Settings' },
+      icon: '⚙️',
     },
     {
       href: '/admin/content',
