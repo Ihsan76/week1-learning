@@ -1,3 +1,5 @@
+// src/components/Navbar.tsx
+
 'use client';
 
 import Link from 'next/link';
@@ -67,7 +69,8 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="navbar">
+
+    <nav className="sticky top-0 z-50 bg-slate-900 shadow-lg navbar">
       <div className="navbar-container">
         {/* Logo */}
         <Link href="/" className="navbar-logo">
