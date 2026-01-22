@@ -1,5 +1,4 @@
 // src/components/Navbar.tsx
-
 'use client';
 
 import Link from 'next/link';
@@ -48,8 +47,8 @@ export default function Navbar() {
 
   const navItemsLoggedIn: NavItem[] = [
     { href: '/', label: { ar: translations.nav.home, en: translations.nav.home } },
-    { href: '/dashboard', label: { ar: translations.nav.dashboard,  en: translations.nav.dashboard } },
-    { href: '/settings', label: { ar: translations.nav.settings,  en: translations.nav.settings } },
+    { href: '/dashboard', label: { ar: translations.nav.dashboard, en: translations.nav.dashboard } },
+    { href: '/settings', label: { ar: translations.nav.settings, en: translations.nav.settings } },
     { href: '/weeks', label: { ar: translations.nav.weeks, en: enTranslations.nav.weeks } },
     { href: '/resources', label: { ar: translations.nav.resources, en: enTranslations.nav.resources } },
   ];
@@ -57,7 +56,7 @@ export default function Navbar() {
   const adminItems: AdminItem[] = [
     { href: '/admin', label: { ar: 'لوحة التحكم', en: 'Dashboard' }, icon: '📊' },
     { href: '/admin/users', label: { ar: 'إدارة المستخدمين', en: 'Users Management' }, icon: '👥' },
-    { href: '/admin/content', label: { ar: 'إدارة المحتوى', en: 'Content Management' }, icon: '📝' },
+    { href: '/admin/content', label: { ar: 'إدارة المحتوى', en: 'Content Management' }, icon: '📏' },
     { href: '/admin/settings', label: { ar: 'الإعدادات', en: 'Settings' }, icon: '⚙️' },
     { href: '/admin/reports', label: { ar: 'التقارير', en: 'Reports' }, icon: '📈' },
   ];
@@ -69,7 +68,6 @@ export default function Navbar() {
   ];
 
   return (
-
     <nav className="sticky top-0 z-50 bg-slate-900 shadow-lg navbar">
       <div className="navbar-container">
         {/* Logo */}
@@ -130,10 +128,21 @@ export default function Navbar() {
 
         {/* Right Actions */}
         <div className="nav-actions">
-          {isLoggedIn && (
-            <button onClick={handleLogout} className="btn-logout">
-              {translations.nav.logout || 'Logout'}
-            </button>
+          {isLoggedIn ? (
+            <>
+              <button onClick={handleLogout} className="btn-logout">
+                {translations.nav.logout || 'Logout'}
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="btn-login">
+                {locale === 'ar' ? 'تسجيل دخول' : 'Login'}
+              </Link>
+              <Link href="/register" className="btn-signup">
+                {locale === 'ar' ? 'موافق' : 'Sign up'}
+              </Link>
+            </>
           )}
           <button onClick={toggleLocale} className="btn-language" aria-label="Toggle language">
             {locale === 'ar' ? '😄 EN' : '🌠 AR'}
