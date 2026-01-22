@@ -8,11 +8,26 @@
     "login": "Login",
     "register": "Register",
     "users": "Users Management",
-    "reports": "Reports",
     "content": "Content Management",
     "languages": "Languages",
     "weeks": "Weeks",
     "resources": "Resources"
+  },
+  "home": {
+    "title": "Web Learning Platform",
+    "subtitle": "Learn Web Development Professionally",
+    "tech": "Technologies",
+    "features": "Features",
+    "ready": "Ready to Start?",
+    "readyText": "Join us now and start your journey",
+    "cta": "Go to Dashboard",
+    "copyright": "All Rights Reserved",
+    "simpleLesson": "Simple Lessons",
+    "simpleLessonDesc": "Easy to understand content",
+    "projects": "Practical Projects",
+    "projectsDesc": "Real world applications",
+    "bestPractices": "Best Practices",
+    "bestPracticesDesc": "Professional standards"
   },
   "hero": {
     "title": "Learn Web Development 🌐",
@@ -30,7 +45,7 @@
     "zustand": "State Management"
   },
   "features": {
-    "title": "Key Features ⭐",
+    "title": "Main Features ⭐",
     "performance": "High Performance",
     "performance_desc": "Next.js with Optimization",
     "security": "Completely Secure",
@@ -42,18 +57,33 @@
     "development": "Easy Development",
     "development_desc": "Organized and clear code",
     "documentation": "Fully Documented",
-    "documentation_desc": "Detailed explanation for everything"
+    "documentation_desc": "Detailed explanation of everything"
   },
   "cta": {
     "title": "Ready to Start? 🎯",
-    "subtitle": "Join thousands of learners who have started their journey with us",
+    "subtitle": "Join thousands of learners who started their journey with us",
     "button": "Continue Learning"
   },
+  "auth": {
+    "login": "Sign In",
+    "register": "Create Account",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "Sign Up",
+    "haveAccount": "Have an account?",
+    "noAccount": "Don't have an account?",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "logout": "Logout",
+    "passwordMismatch": "Passwords do not match",
+    "error": "An error occurred",
+    "success": "Success"
+  },
   "footer": {
-    "copyright": "© 2026 Week1 Learning - All rights reserved",
-    "developed": "Developed with ❤️ for modern web teaching"
-  }
-    ,
+    "copyright": "© 2026 Week1 Learning - All Rights Reserved",
+    "developed": "Developed with ❤️ for modern web education"
+  },
   "course": {
     "difficulty": "Level",
     "duration": "Duration",
