@@ -53,9 +53,7 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center space-y-3">
             <div className="inline-block p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+              
             </div>
             <h1 className="text-3xl font-bold text-white">{t.auth.signIn}</h1>
             <p className="text-gray-300 text-sm">
