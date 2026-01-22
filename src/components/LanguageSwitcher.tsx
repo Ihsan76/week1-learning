@@ -1,27 +1,24 @@
 // src/components/LanguageSwitcher.tsx
+
 'use client'
 
 import { useLocaleStore } from '@/lib/localeStore'
-import { ENABLED_LANGUAGES, type LanguageType } from '@/lib/languages'
+import { allLanguages } from '@/locales/i18n'  // ✅ استيراد صحيح
 
-export function LanguageSwitcher() {
+export default function LanguageSwitcher() {
   const { locale, setLocale } = useLocaleStore()
 
   return (
-    <div className="flex gap-2 items-center">
-      {ENABLED_LANGUAGES.map(lang => (
+    <div className="flex gap-2">
+      {allLanguages.map((lang) => (
         <button
           key={lang.code}
-          onClick={() => setLocale(lang.code as LanguageType)}
-          className={`px-3 py-1 rounded transition-all text-sm font-medium ${
-            locale === lang.code
-              ? 'bg-blue-500 text-white shadow-md'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+          onClick={() => setLocale(lang.code as any)}  // ✅ add type
+          className={`px-3 py-2 rounded ${
+            locale === lang.code ? 'bg-blue-500' : 'bg-gray-400'
           }`}
-          title={lang.nativeName}
         >
-          <span className="mr-1">{lang.flag}</span>
-          {lang.code.toUpperCase()}
+          {lang.flag} {lang.name}
         </button>
       ))}
     </div>

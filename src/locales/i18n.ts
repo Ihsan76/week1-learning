@@ -1,18 +1,19 @@
 // src/locales/i18n.ts
-import 'server-only'
-import languagesConfig from '../config/languages.json'
+// import 'server-only'
+import languagesConfig from '@/config/languages.json'
 
 export type LanguageConfig = {
   code: string
   name: string
   nativeName: string
-  dir: 'rtl' | 'ltr'
-  flag?: string
-  enabled?: boolean
-  isDefault?: boolean
+  dir: 'rtl' | 'ltr'  
+  flag: string
+  enabled: boolean
+  isDefault: boolean
 }
 
-export const allLanguages: LanguageConfig[] = languagesConfig
+// ✅ أضف as const للـ JSON
+export const allLanguages: LanguageConfig[] = languagesConfig as LanguageConfig[]
 export const enabledLanguages = allLanguages.filter(l => l.enabled !== false)
 export const defaultLanguage = allLanguages.find(l => l.isDefault) ?? allLanguages[0]
 

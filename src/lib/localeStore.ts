@@ -2,7 +2,7 @@
 'use client'
 
 import { create } from 'zustand'
-import { LanguageType, ENABLED_LANGUAGES, DEFAULT_LANGUAGE } from '@/lib/languages'
+import { LanguageType, ENABLED_LANGUAGES, DEFAULT_LANGUAGE } from './languages'
 import { getDictionary } from '@/locales/i18n'
 
 interface LocaleStore {

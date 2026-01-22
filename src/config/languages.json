@@ -1,7 +1,7 @@
 [
   {
     "code": "ar",
-    "name": "العربية",
+    "name": "Arabic",
     "nativeName": "العربية",
     "dir": "rtl",
     "flag": "🇸🇦",
@@ -15,15 +15,6 @@
     "dir": "ltr",
     "flag": "🇺🇸",
     "enabled": true,
-    "isDefault": false
-  },
-  {
-    "code": "fr",
-    "name": "Français",
-    "nativeName": "Français",
-    "dir": "ltr",
-    "flag": "🇫🇷",
-    "enabled": false,
     "isDefault": false
   }
 ]

@@ -1,4 +1,6 @@
 // src/lib/languages.ts
+
+
 export type LanguageType = 'ar' | 'en'
 
 export interface LanguageConfig {
@@ -34,6 +36,10 @@ export const LANGUAGES_CONFIG: LanguageConfig[] = [
 
 export const ENABLED_LANGUAGES = LANGUAGES_CONFIG.filter(l => l.enabled)
 export const DEFAULT_LANGUAGE = LANGUAGES_CONFIG.find(l => l.isDefault) || LANGUAGES_CONFIG[0]
+
+// ✅ استخدم LANGUAGES_CONFIG بدل languages
+export const getLanguages = () => LANGUAGES_CONFIG
+export const getLanguage = (code: string) => LANGUAGES_CONFIG.find(l => l.code === code)
 
 export function getLanguageConfig(code: string): LanguageConfig | undefined {
   return LANGUAGES_CONFIG.find(lang => lang.code === code)

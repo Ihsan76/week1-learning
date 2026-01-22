@@ -4,9 +4,9 @@
 import { ReactNode, useEffect, useState } from 'react'
 import { useLocaleStore } from '@/lib/localeStore'
 import { ENABLED_LANGUAGES, getLanguageConfig } from '@/lib/languages'
-import LocaleSync from './LocaleSync'
+import LocaleSync from '@/components/LocaleSync'  // ✅ default export
 
-export function LocaleProvider({ children }: { children: ReactNode }) {
+export default function LocaleProvider({ children }: { children: ReactNode }) {
   const { isLoading, initializeLocale } = useLocaleStore()
   const [mounted, setMounted] = useState(false)
 
