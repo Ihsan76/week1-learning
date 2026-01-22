@@ -62,9 +62,9 @@ export default function RegisterPage() {
       }
 
       // نتوقع أن الباك إند يرجع user + token
-      const { user , email} = data;
+      
 
-      if (!user || !email ) {
+      if (!data.user || !data.email ) {
         setError(t.auth.error);
         return;
       }
