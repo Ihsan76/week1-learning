@@ -1,3 +1,5 @@
+// src/app/admin/page.tsx
+
 'use client';
 
 import { useEffect } from 'react';
@@ -45,30 +47,33 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-bg-dark pt-24 pb-12">
-      <div className="container mx-auto px-4 md:px-8">
-        {/* Page Title */}
-        <div className="mb-12">
-          <h1 className="hero-title mb-4">{content.admin}</h1>
-          <p className="text-text-slate-400">{content.management}</p>
-        </div>
+    <div className="admin-dashboard-inner">
+      {/* Page Title */}
+      <div className="mb-8">
+        <h1 className="hero-title mb-3">{content.admin}</h1>
+        <p className="text-text-slate-400">{content.management}</p>
+      </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {stats.map((stat, idx) => (
-            <div key={idx} className="bg-bg-darker border border-primary-dark rounded-lg p-8 text-center">
-              <div className="text-4xl mb-4">{stat.icon}</div>
-              <h3 className="section-title mb-2">{stat.value}</h3>
-              <p className="text-text-secondary">{stat.label}</p>
-            </div>
-          ))}
-        </div>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        {stats.map((stat, idx) => (
+          <div
+            key={idx}
+            className="bg-bg-darker border border-primary-dark rounded-lg p-6 text-center"
+          >
+            <div className="text-4xl mb-3">{stat.icon}</div>
+            <h3 className="section-title mb-1">{stat.value}</h3>
+            <p className="text-text-secondary">{stat.label}</p>
+          </div>
+        ))}
+      </div>
 
-        {/* Recent Activity Section */}
-        <div className="bg-bg-darker border border-primary-dark rounded-lg p-8">
-          <h2 className="section-title mb-6">{content.recentActivity}</h2>
-          <p className="text-text-secondary">Activity logs and system updates will be displayed here.</p>
-        </div>
+      {/* Recent Activity Section */}
+      <div className="bg-bg-darker border border-primary-dark rounded-lg p-6">
+        <h2 className="section-title mb-4">{content.recentActivity}</h2>
+        <p className="text-text-secondary">
+          Activity logs and system updates will be displayed here.
+        </p>
       </div>
     </div>
   );

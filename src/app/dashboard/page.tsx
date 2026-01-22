@@ -9,7 +9,7 @@ import { useLocaleStore } from '@/lib/localeStore';
 const getContent = (locale: string) => {
   if (locale === 'ar') {
     return {
-      welcome: 'أهلا بالرجوع',
+      welcome: 'أهلا بعودتك',
       dashboard: 'لوحة التحكم',
       stats: 'الإحصائيات',
       courses: 'الدروس',

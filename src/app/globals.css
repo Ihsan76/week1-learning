@@ -539,9 +539,15 @@ a {
 
 .admin-content {
   flex: 1;
-  padding: 1.5rem;
-  /* لا تضع width: 100% هنا حتى لا ينزل تحت الـ sidebar */
+  padding: 1.25rem;              /* مسافة من حافة منطقة المحتوى */
 }
+
+.admin-dashboard-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;       /* مسافة داخلية عن الحواف */
+}
+
 
 .sidebar-header {
   padding: 0 1.5rem;
