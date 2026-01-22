@@ -64,7 +64,7 @@ export default function RegisterPage() {
       // نتوقع أن الباك إند يرجع user + token
       
 
-      if (!data.user || !data.email ) {
+      if (!data.id || !data.email ) {
         setError(t.auth.error);
         return;
       }
