@@ -13,8 +13,7 @@ export default function LanguageSwitcher() {
       {allLanguages.map((lang) => (
         <button
           key={lang.code}
-          onClick={() => setLocale(lang.code as any)}  // ✅ add type
-          className={`px-3 py-2 rounded ${
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => setLocale(lang.code)}          className={`px-3 py-2 rounded ${
             locale === lang.code ? 'bg-blue-500' : 'bg-gray-400'
           }`}
         >
