@@ -1,12 +1,18 @@
 // src/lib/store.ts
-
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+export interface User {
+  id: number;
+  email: string;
+  // أضف أي حقول أخرى يرجعها الباك إند (مثلاً name, is_admin...)
+}
+
 export interface AuthStore {
   isLoggedIn: boolean;
-  user: { email: string } | null;
-  login: (email: string) => void;
+  user: User | null;
+  token: string | null;
+  setAuth: (user: User, token: string) => void;
   logout: () => void;
 }
 
@@ -15,15 +21,18 @@ export const useAuthStore = create<AuthStore>()(
     (set) => ({
       isLoggedIn: false,
       user: null,
-      login: (email: string) =>
+      token: null,
+      setAuth: (user, token) =>
         set({
           isLoggedIn: true,
-          user: { email },
+          user,
+          token,
         }),
       logout: () =>
         set({
           isLoggedIn: false,
           user: null,
+          token: null,
         }),
     }),
     {
