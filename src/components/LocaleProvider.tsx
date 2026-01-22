@@ -5,6 +5,8 @@ import { ReactNode, useEffect, useState } from 'react'
 import { useLocaleStore } from '@/lib/localeStore'
 import { ENABLED_LANGUAGES, getLanguageConfig } from '@/lib/languages'
 import LocaleSync from '@/components/LocaleSync'  // ✅ default export
+import HtmlDirectionSync from '@/components/HtmlDirectionSync'  // ✅ أضف هذا
+
 
 export default function LocaleProvider({ children }: { children: ReactNode }) {
   const { isLoading, initializeLocale } = useLocaleStore()
@@ -16,12 +18,14 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
   }, [initializeLocale])
 
   if (!mounted) {
+    <HtmlDirectionSync />
     return <>{children}</>
   }
 
   return (
     <>
       <LocaleSync />
+      <HtmlDirectionSync />  {/* ✅ أضف هذا */}
       {children}
     </>
   )
