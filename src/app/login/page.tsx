@@ -72,7 +72,7 @@ export default function LoginPage() {
               72
 
               
-              <p className="text-red-200 text-sm">{error}</p>
+              <p className="text-red-200 text-sm">لإثسف Test{error}</p>
             </div>
           )}
 
