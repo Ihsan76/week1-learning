@@ -1,34 +1,12 @@
 'use client';
-
 import Link from 'next/link';
 import { useAuthStore } from '@/lib/store';
 import { useLocaleStore } from '@/lib/localeStore';
 import { useEffect, useState } from 'react';
+import ar from '@/locales/ar.json';
+import en from '@/locales/en.json';
 
-const getContent = (locale: string) => {
-  if (locale === 'ar') {
-    return {
-      title: 'منصة تعليم الويب',
-      subtitle: 'تعلم تطوير الويب بشكل احترافي',
-      tech: 'التقنيات',
-      features: 'المميزات',
-      ready: 'جاهز للبدء؟',
-      readyText: 'انضم إلينا الآن وابدأ رحلتك',
-      cta: 'اذهب للداشبورد',
-      copyright: 'جميع الحقوق محفوظة',
-    };
-  }
-  return {
-    title: 'Web Learning Platform',
-    subtitle: 'Learn Web Development Professionally',
-    tech: 'Technologies',
-    features: 'Features',
-    ready: 'Ready to Start?',
-    readyText: 'Join us now',
-    cta: 'Go to Dashboard',
-    copyright: 'All Rights Reserved',
-  };
-};
+const translations = { ar, en };
 
 export default function Home() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -41,91 +19,91 @@ export default function Home() {
 
   if (!mounted) return null;
 
-  const content = getContent(locale);
+  const t = translations[locale as keyof typeof translations] || translations.en;
 
   return (
     <div className="container">
       {/* Hero */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title">{content.title}</h1>
-          <p className="hero-subtitle">{content.subtitle}</p>
+          <h1 className="hero-title">{t.home.title}</h1>
+          <p className="hero-subtitle">{t.home.subtitle}</p>
         </div>
       </section>
 
       {/* Technologies */}
       <section className="section">
-        <h2 className="section-title">{content.tech}</h2>
+        <h2 className="section-title">{t.home.tech}</h2>
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-icon">⚡</div>
             <h3 className="feature-title">Next.js</h3>
-            <p className="section-subtitle">React Framework متطور</p>
+            <p className="section-subtitle">{t.technologies.nextjs}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">🐍</div>
             <h3 className="feature-title">Django</h3>
-            <p className="section-subtitle">Python Web Framework</p>
+            <p className="section-subtitle">{t.technologies.django}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">⚛️</div>
             <h3 className="feature-title">React</h3>
-            <p className="section-subtitle">UI Library قوية</p>
+            <p className="section-subtitle">{t.technologies.react}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">📘</div>
             <h3 className="feature-title">TypeScript</h3>
-            <p className="section-subtitle">Type Safety</p>
+            <p className="section-subtitle">{t.technologies.typescript}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">🔌</div>
             <h3 className="feature-title">APIs</h3>
-            <p className="section-subtitle">RESTful Services</p>
+            <p className="section-subtitle">{t.technologies.apis}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">📦</div>
             <h3 className="feature-title">Zustand</h3>
-            <p className="section-subtitle">State Management</p>
+            <p className="section-subtitle">{t.technologies.zustand}</p>
           </div>
         </div>
       </section>
 
       {/* Features */}
       <section className="section">
-        <h2 className="section-title">{content.features} ⭐</h2>
+        <h2 className="section-title">{t.home.features} ⭐</h2>
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-icon">🎯</div>
-            <h3 className="feature-title">{locale === 'ar' ? 'دروس مبسطة' : 'Simple Lessons'}</h3>
-            <p className="section-subtitle">{locale === 'ar' ? 'محتوى سهل الفهم' : 'Easy to understand'}</p>
+            <h3 className="feature-title">{t.home.simpleLesson}</h3>
+            <p className="section-subtitle">{t.home.simpleLessonDesc}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">🚀</div>
-            <h3 className="feature-title">{locale === 'ar' ? 'مشاريع عملية' : 'Projects'}</h3>
-            <p className="section-subtitle">{locale === 'ar' ? 'تطبيق حقيقي' : 'Real projects'}</p>
+            <h3 className="feature-title">{t.home.projects}</h3>
+            <p className="section-subtitle">{t.home.projectsDesc}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">💡</div>
-            <h3 className="feature-title">{locale === 'ar' ? 'أفضل المعايير' : 'Best Practices'}</h3>
-            <p className="section-subtitle">{locale === 'ar' ? 'احترافية' : 'Professional'}</p>
+            <h3 className="feature-title">{t.home.bestPractices}</h3>
+            <p className="section-subtitle">{t.home.bestPracticesDesc}</p>
           </div>
         </div>
       </section>
 
       {/* CTA */}
       <section className="section-cta">
-        <h2 className="section-title">{content.ready}</h2>
-        <p className="section-subtitle">{content.readyText}</p>
+        <h2 className="section-title">{t.home.ready}</h2>
+        <p className="section-subtitle">{t.home.readyText}</p>
         {!isLoggedIn && (
           <Link href="/dashboard" className="btn-primary">
-            {content.cta}
+            {t.home.cta}
           </Link>
         )}
       </section>
 
       {/* Footer */}
       <footer className="footer">
-        <p>© 2024 Week1 Learning - {content.copyright}</p>
+        <p>© 2024 Week1 Learning - {t.home.copyright}</p>
       </footer>
     </div>
   );
