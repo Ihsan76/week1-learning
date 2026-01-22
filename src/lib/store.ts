@@ -5,6 +5,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 export interface User {
   id: number;
   email: string;
+  created_at?: string;
   // أضف أي حقول أخرى يرجعها الباك إند (مثلاً name, is_admin...)
 }
 
@@ -12,7 +13,7 @@ export interface AuthStore {
   isLoggedIn: boolean;
   user: User | null;
   token: string | null;
-  setAuth: (user: User, token: string) => void;
+  setAuth: (user: User) => void;
   logout: () => void;
 }
 
@@ -26,7 +27,6 @@ export const useAuthStore = create<AuthStore>()(
         set({
           isLoggedIn: true,
           user,
-          token,
         }),
       logout: () =>
         set({
