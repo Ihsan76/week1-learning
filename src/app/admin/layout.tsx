@@ -17,11 +17,15 @@ export default function AdminLayout({
   if (!mounted) return null;
 
   return (
-    <div className="flex min-h-screen bg-slate-900">
+    <div className="admin-layout">
+       <aside className="admin-sidebar">
+    
       <AdminSidebar />
+      </aside>  
       <main className="flex-1">
         {children}
       </main>
     </div>
+    
   );
 }

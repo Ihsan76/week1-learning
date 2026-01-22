@@ -522,13 +522,25 @@ a {
 
 
 /* Admin Sidebar Styles */
+.admin-layout {
+  display: flex;                 /* مهم جداً ليكونوا بجانب بعض */
+  min-height: calc(100vh - 60px); /* حسب ارتفاع الـ navbar العلوي لديك */
+}
+
 .admin-sidebar {
   width: 250px;
   background-color: rgba(20, 30, 40, 0.9);
   border-right: 1px solid #333;
+  flex-shrink: 0;
   padding: 1.5rem 0;
   height: 100%;
   position: relative;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 1.5rem;
+  /* لا تضع width: 100% هنا حتى لا ينزل تحت الـ sidebar */
 }
 
 .sidebar-header {
