@@ -23,7 +23,6 @@ export default function LoginPage() {
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const t = translations[locale as keyof typeof translations] || translations.en;
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
