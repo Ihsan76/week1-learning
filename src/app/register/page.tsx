@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,7 +38,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/auth/register/', {
+      const response = await fetch('https://week1-backend.onrender.com/api/auth/register/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -116,7 +116,7 @@ export default function RegisterPage() {
         </form>
 
         <p className="text-gray-400 text-center mt-6">
-          هل لديك حساب؟{' '}
+          هل لديك حساب?{' '}
           <Link href="/login" className="text-blue-400 hover:underline">
             سجّل دخول
           </Link>
