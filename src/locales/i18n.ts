@@ -1,46 +1,52 @@
 // src/locales/i18n.ts
-import ar from './ar.json';
-import en from './en.json';
+import 'server-only'
+import languagesConfig from '../config/languages.json'
 
-type LanguageType = 'ar' | 'en';
-
-const locales = {
-  ar,
-  en,
-};
-
-interface TranslationKey {
-  [key: string]: string | TranslationKey;
+export type LanguageConfig = {
+  code: string
+  name: string
+  nativeName: string
+  dir: 'rtl' | 'ltr'
+  flag?: string
+  enabled?: boolean
+  isDefault?: boolean
 }
 
-const getNestedValue = (obj: TranslationKey, path: string): string => {
-  const keys = path.split('.');
-  let value: any = obj;
+export const allLanguages: LanguageConfig[] = languagesConfig
+export const enabledLanguages = allLanguages.filter(l => l.enabled !== false)
+export const defaultLanguage = allLanguages.find(l => l.isDefault) ?? allLanguages[0]
+
+export type Locale = (typeof enabledLanguages)[number]['code']
+
+// Dynamic import لملفات الترجمة
+const dictionaries: Record<string, () => Promise<any>> = {}
+
+// إنشء قاموس ديناميكي بناءً على اللغات المتاحة
+enabledLanguages.forEach(lang => {
+  dictionaries[lang.code] = () =>
+    import(`./${lang.code}.json`).then(m => m.default).catch(() => ({}))
+})
+
+export async function getDictionary(locale: Locale | string) {
+  const validLocale = enabledLanguages.find(l => l.code === locale)
   
-  for (const key of keys) {
-    if (value && typeof value === 'object' && key in value) {
-      value = value[key];
-    } else {
-      return path; // Return key if translation not found
-    }
+  if (!validLocale) {
+    return getDictionary(defaultLanguage.code as Locale)
   }
-  
-  return typeof value === 'string' ? value : path;
-};
 
-export const useTranslation = (lang: LanguageType = 'ar') => {
-  const locale = locales[lang];
-  
-  return {
-    t: (key: string): string => getNestedValue(locale as TranslationKey, key),
-    locale: lang,
-    locales: Object.keys(locales) as LanguageType[],
-  };
-};
+  if (dictionaries[locale]) {
+    return dictionaries[locale]()
+  }
 
-export const getLanguages = () => ([
-  { code: 'ar', name: 'العربية', flag: '🇪🇦' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-] as const);
+  return {}
+}
 
-export type { LanguageType };
+// دالة مساعدة للحصول على معلومات اللغة
+export function getLanguageConfig(code: string): LanguageConfig | undefined {
+  return allLanguages.find(lang => lang.code === code)
+}
+
+// تصدير مفاتيح الترجمة (للـ type-safe استخدام)
+export type TranslationKeys = 'nav' | 'home' | 'dashboard' | 'admin' | 
+  'settings' | 'logout' | 'login' | 'register' | 'users' | 'content' | 
+  'languages' | 'weeks' | 'resources' | 'hero' | 'technologies' | 'features' | 'cta'

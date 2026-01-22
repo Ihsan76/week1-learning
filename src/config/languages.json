@@ -1,0 +1,29 @@
+[
+  {
+    "code": "ar",
+    "name": "العربية",
+    "nativeName": "العربية",
+    "dir": "rtl",
+    "flag": "🇸🇦",
+    "enabled": true,
+    "isDefault": true
+  },
+  {
+    "code": "en",
+    "name": "English",
+    "nativeName": "English",
+    "dir": "ltr",
+    "flag": "🇺🇸",
+    "enabled": true,
+    "isDefault": false
+  },
+  {
+    "code": "fr",
+    "name": "Français",
+    "nativeName": "Français",
+    "dir": "ltr",
+    "flag": "🇫🇷",
+    "enabled": false,
+    "isDefault": false
+  }
+]

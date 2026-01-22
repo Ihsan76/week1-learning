@@ -1,24 +1,28 @@
-'use client';
+// src/components/LocaleProvider.tsx
+'use client'
 
-import { ReactNode } from 'react';
-import { useLocaleStore } from '@/lib/localeStore';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react'
+import { useLocaleStore } from '@/lib/localeStore'
+import { ENABLED_LANGUAGES, getLanguageConfig } from '@/lib/languages'
+import LocaleSync from './LocaleSync'
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [mounted, setMounted] = useState(false);
-  const locale = useLocaleStore((state) => state.locale);
+  const { isLoading, initializeLocale } = useLocaleStore()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+    initializeLocale()
+  }, [initializeLocale])
 
   if (!mounted) {
-    return <>{children}</>;
+    return <>{children}</>
   }
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <>
+      <LocaleSync />
       {children}
-    </html>
-  );
+    </>
+  )
 }
