@@ -65,6 +65,8 @@ export default function Navbar() {
     { href: '/', label: { ar: translations.nav.home, en: enTranslations.nav.home } },
     { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
     { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } },
+    { href: '/login' ,  label: { ar: arTranslations.nav.login, en: enTranslations.nav.login } },
+    { href: '/register', label: { ar: arTranslations.nav.register, en: enTranslations.nav.register } },
   ];
 
   return (
@@ -134,16 +136,8 @@ export default function Navbar() {
                 {translations.nav.logout || 'Logout'}
               </button>
             </>
-          ) : (
-            <>
-              <Link href="/login" className="btn-login">
-                {locale === 'ar' ? 'تسجيل دخول' : 'Login'}
-              </Link>
-              <Link href="/register" className="btn-signup">
-                {locale === 'ar' ? 'موافق' : 'Sign up'}
-              </Link>
-            </>
-          )}
+          
+          ): null}
           <button onClick={toggleLocale} className="btn-language" aria-label="Toggle language">
             {locale === 'ar' ? '😄 EN' : '🌠 AR'}
           </button>
