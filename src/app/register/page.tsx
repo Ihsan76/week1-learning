@@ -62,15 +62,15 @@ export default function RegisterPage() {
       }
 
       // نتوقع أن الباك إند يرجع user + token
-      const { user, token } = data;
+      const { user } = data;
 
-      if (!user || !token) {
+      if (!user ) {
         setError(t.auth.error);
         return;
       }
 
       // تخزين بيانات المستخدم/التوكن في Zustand
-      setAuth(user, token);
+      setAuth(user);
 
       // بعد التسجيل الناجح، وجّهه مباشرة للـ Dashboard
       router.push('/dashboard');
