@@ -47,15 +47,15 @@ export default function LoginPage() {
       }
 
       // نتوقع من الباك إند: { user: {...}, token: "..." }
-      const { user, token } = data;
+      const { user } = data;
 
-      if (!user || !token) {
+      if (!user) {
         setError(t.auth.error);
         return;
       }
 
       // تخزين بيانات المستخدم/التوكن
-      setAuth(user, token);
+      setAuth(user);
 
       router.push('/dashboard');
     } catch (err) {
