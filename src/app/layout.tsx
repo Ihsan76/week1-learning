@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next'
 import Navbar from "@/components/Navbar"
-import LocaleProvider from '@/components/LocaleProvider'  // ✅ استيراد صحيح
+// import LocaleProvider from '@/components/LocaleProvider'  // ✅ استيراد صحيح
 import './globals.css'
 
 export const metadata: Metadata = {
