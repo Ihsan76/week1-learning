@@ -2,7 +2,7 @@
 'use client'
 
 import { ReactNode, useEffect, useState } from 'react'
-import { useLocaleStore } from '@/lib/localeStore'
+// import { useLocaleStore } from '@/lib/localeStore'
 import { ENABLED_LANGUAGES, getLanguageConfig } from '@/lib/languages'
 import LocaleSync from '@/components/LocaleSync' // default export
 // import HtmlDirectionSync from '@/components/HtmlDirectionSync' // default export
@@ -22,7 +22,7 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <LocaleSync />
+     
      
       {children}
     </>
