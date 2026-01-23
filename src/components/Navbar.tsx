@@ -3,15 +3,13 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuthStore } from '@/lib/store';
-import { useLocaleStore } from '@/lib/localeStore';
 import { useEffect, useState } from 'react';
-import arTranslations from '@/locales/ar.json';
-import enTranslations from '@/locales/en.json';
+import { useAuthStore } from '@/lib/store';
+import { useLocale } from '@/hooks/useLocale';
 
 interface NavItem {
   href: string;
-  label: { ar: string; en: string };
+  labelKey: keyof typeof dict.nav; // سنضبطه بعد تعريف dict
 }
 
 interface AdminItem {
@@ -25,8 +23,8 @@ export default function Navbar() {
   const router = useRouter();
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const logout = useAuthStore((state) => state.logout);
-  const locale = useLocaleStore((state) => state.locale);
-  const toggleLocale = useLocaleStore((state) => state.toggleLocale);
+
+  const { locale, dict, isLoading, changeLocale } = useLocale();
   const [mounted, setMounted] = useState(false);
   const [showAdminDropdown, setShowAdminDropdown] = useState(false);
 
@@ -34,7 +32,10 @@ export default function Navbar() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted || isLoading || !dict) return null;
+
+  const translations = dict.nav; // نستخدم قاموس nav من dict
+  type NavKey = keyof typeof translations;
 
   const isActive = (href: string) => pathname === href;
 
@@ -43,14 +44,20 @@ export default function Navbar() {
     router.push('/login');
   };
 
-  const translations = locale === 'ar' ? arTranslations : enTranslations;
+  const navItemsLoggedIn: { href: string; key: NavKey }[] = [
+    { href: '/', key: 'home' },
+    { href: '/dashboard', key: 'dashboard' },
+    { href: '/settings', key: 'settings' },
+    { href: '/weeks', key: 'weeks' },
+    { href: '/resources', key: 'resources' },
+  ];
 
-  const navItemsLoggedIn: NavItem[] = [
-    { href: '/', label: { ar: translations.nav.home, en: translations.nav.home } },
-    { href: '/dashboard', label: { ar: translations.nav.dashboard, en: translations.nav.dashboard } },
-    { href: '/settings', label: { ar: translations.nav.settings, en: translations.nav.settings } },
-    { href: '/weeks', label: { ar: translations.nav.weeks, en: enTranslations.nav.weeks } },
-    { href: '/resources', label: { ar: translations.nav.resources, en: enTranslations.nav.resources } },
+  const navItemsGuest: { href: string; key: NavKey }[] = [
+    { href: '/', key: 'home' },
+    { href: '/weeks', key: 'weeks' },
+    { href: '/resources', key: 'resources' },
+    { href: '/login', key: 'login' },
+    { href: '/register', key: 'register' },
   ];
 
   const adminItems: AdminItem[] = [
@@ -61,13 +68,9 @@ export default function Navbar() {
     { href: '/admin/reports', label: { ar: 'التقارير', en: 'Reports' }, icon: '📈' },
   ];
 
-  const navItemsGuest: NavItem[] = [
-    { href: '/', label: { ar: translations.nav.home, en: enTranslations.nav.home } },
-    { href: '/weeks', label: { ar: arTranslations.nav.weeks, en: enTranslations.nav.weeks } },
-    { href: '/resources', label: { ar: arTranslations.nav.resources, en: enTranslations.nav.resources } },
-    { href: '/login' ,  label: { ar: arTranslations.nav.login, en: enTranslations.nav.login } },
-    { href: '/register', label: { ar: arTranslations.nav.register, en: enTranslations.nav.register } },
-  ];
+  const toggleLocale = () => {
+    changeLocale(locale === 'ar' ? 'en' : 'ar');
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-slate-900 shadow-lg navbar">
@@ -87,7 +90,7 @@ export default function Navbar() {
                   href={item.href}
                   className={`nav-link ${isActive(item.href) ? 'active' : ''}`}
                 >
-                  {item.label[locale as 'ar' | 'en']}
+                  {translations[item.key]}
                 </Link>
               ))
             : navItemsGuest.map((item) => (
@@ -96,7 +99,7 @@ export default function Navbar() {
                   href={item.href}
                   className={`nav-link ${isActive(item.href) ? 'active' : ''}`}
                 >
-                  {item.label[locale as 'ar' | 'en']}
+                  {translations[item.key]}
                 </Link>
               ))}
 
@@ -107,7 +110,7 @@ export default function Navbar() {
                 className="nav-link2 admin-toggle"
                 onClick={() => setShowAdminDropdown(!showAdminDropdown)}
               >
-                {translations.nav.admin}
+                {translations.admin}
               </button>
               {showAdminDropdown && (
                 <div className="nav-dropdown-menu">
@@ -130,14 +133,11 @@ export default function Navbar() {
 
         {/* Right Actions */}
         <div className="nav-actions">
-          {isLoggedIn ? (
-            <>
-              <button onClick={handleLogout} className="btn-logout">
-                {translations.nav.logout || 'Logout'}
-              </button>
-            </>
-          
-          ): null}
+          {isLoggedIn && (
+            <button onClick={handleLogout} className="btn-logout">
+              {translations.logout || 'Logout'}
+            </button>
+          )}
           <button onClick={toggleLocale} className="btn-language" aria-label="Toggle language">
             {locale === 'ar' ? '😄 EN' : '🌠 AR'}
           </button>
