@@ -95,5 +95,38 @@
     "beginner": "Beginner",
     "advanced": "Advanced",
     "recent": "Recent Lessons"
-  }
+  },
+  "dashboard": {
+  "title": "Dashboard",
+  "welcome": "Welcome back",
+  "stats": "Statistics",
+  "courses": "Courses",
+  "completedCourses": "Completed Courses",
+  "inProgress": "In Progress",
+  "hoursLearned": "Hours Learned",
+  "recentCourses": "Recent Courses",
+  "startLearning": "Start Learning",
+  "continue": "Continue",
+  "level": "Level",
+  "duration": "Duration",
+  "logout": "Logout",
+  "viewWeekOne": "View Week 1 Curriculum",
+  "noCourses": "No courses yet",
+  "newCourseTitle": "Course title",
+  "newCourseDescription": "Short description",
+  "newCourseLevel": "Level",
+  "createCourse": "Create new course",
+  "creatingCourse": "Creating course...",
+  "loadingCourses": "Loading courses...",
+  "errorLoadingCourses": "Failed to load courses",
+  "errorCreatingCourse": "Failed to create course",
+  "errorCreatingCourseGeneric": "An error occurred while creating the course",
+  "titleRequired": "Please enter a course title",
+  "beginner": "Beginner",
+  "intermediate": "Intermediate",
+  "advanced": "Advanced",
+  "durationWeeks": "weeks (assumed)",
+  "loading": "Loading..."
+}
+
 }
