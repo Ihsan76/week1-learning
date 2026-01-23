@@ -9,7 +9,7 @@ export function useLocale() {
   const [dict, setDict] = useState<any | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // تحميل اللغة الأولية + القاموس
+  // تحديد اللغة الأولية من localStorage مرة واحدة
   useEffect(() => {
     const saved = window.localStorage.getItem('locale') as Locale | null
     const initial = (saved && enabledLanguages.find(l => l.code === saved))
@@ -17,35 +17,30 @@ export function useLocale() {
       : (defaultLanguage.code as Locale)
 
     setLocale(initial)
+  }, [])
 
-    getDictionary(initial).then(d => {
+  // تحميل القاموس + تحديث اتجاه الصفحة في كل مرة تتغيّر فيها locale
+  useEffect(() => {
+    if (!locale) return
+
+    setIsLoading(true)
+    getDictionary(locale).then(d => {
       setDict(d)
       setIsLoading(false)
     })
-  }, [])
 
-  // مزامنة اتجاه <html> مع locale دائمًا
-  useEffect(() => {
     const langConfig = enabledLanguages.find(l => l.code === locale)
-    if (!langConfig) return
-
-    document.documentElement.dir = langConfig.dir
-    document.documentElement.lang = locale
+    if (langConfig) {
+      document.documentElement.dir = langConfig.dir
+      document.documentElement.lang = locale
+    }
   }, [locale])
 
-  const changeLocale = async (newLocale: Locale) => {
-  setLocale(newLocale)
-  const newDict = await getDictionary(newLocale)
-  setDict(newDict)
-  window.localStorage.setItem('locale', newLocale)
-
-  const langConfig = enabledLanguages.find(l => l.code === newLocale)
-  if (langConfig) {
-    document.documentElement.dir = langConfig.dir
-    document.documentElement.lang = newLocale
+  const changeLocale = (newLocale: Locale) => {
+    setLocale(newLocale)
+    window.localStorage.setItem('locale', newLocale)
+    // لا نحمّل القاموس هنا، الـ useEffect فوق سيهتم بذلك
   }
-}
-
 
   return {
     locale,
