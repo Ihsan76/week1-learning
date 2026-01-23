@@ -34,12 +34,18 @@ export function useLocale() {
   }, [locale])
 
   const changeLocale = async (newLocale: Locale) => {
-    setLocale(newLocale)
-    const newDict = await getDictionary(newLocale)
-    setDict(newDict)
-    window.localStorage.setItem('locale', newLocale)
-    // لا حاجة لتكرار set dir/lang هنا لأن useEffect فوق سيعمل تلقائيًا
+  setLocale(newLocale)
+  const newDict = await getDictionary(newLocale)
+  setDict(newDict)
+  window.localStorage.setItem('locale', newLocale)
+
+  const langConfig = enabledLanguages.find(l => l.code === newLocale)
+  if (langConfig) {
+    document.documentElement.dir = langConfig.dir
+    document.documentElement.lang = newLocale
   }
+}
+
 
   return {
     locale,
