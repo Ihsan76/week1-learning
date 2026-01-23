@@ -17,10 +17,8 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className="font-sans bg-slate-900 text-white">
-        <LocaleProvider>
           <Navbar />
           {children}
-        </LocaleProvider>
       </body>
     </html>
   )
