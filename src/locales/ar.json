@@ -95,5 +95,37 @@
     "beginner": "مبتدئ",
     "advanced": "متقدم",
     "recent": "الدروس الحديثة"
-  }
+  },
+  "dashboard": {
+  "title": "لوحة التحكم",
+  "welcome": "أهلاً بعودتك",
+  "stats": "الإحصائيات",
+  "courses": "الدورات",
+  "completedCourses": "الدورات المنتهية",
+  "inProgress": "قيد الإنجاز",
+  "hoursLearned": "ساعات التعلم",
+  "recentCourses": "الدورات الحديثة",
+  "startLearning": "ابدأ التعلم",
+  "continue": "استمرار",
+  "level": "المستوى",
+  "duration": "المدة",
+  "logout": "تسجيل الخروج",
+  "viewWeekOne": "عرض منهاج الأسبوع الأول",
+  "noCourses": "لا توجد دورات حتى الآن",
+  "newCourseTitle": "عنوان الدورة",
+  "newCourseDescription": "وصف مختصر",
+  "newCourseLevel": "المستوى",
+  "createCourse": "إنشاء دورة جديدة",
+  "creatingCourse": "جاري إنشاء الدورة...",
+  "loadingCourses": "جاري تحميل الدورات...",
+  "errorLoadingCourses": "فشل في تحميل الدورات",
+  "errorCreatingCourse": "فشل في إنشاء الدورة",
+  "errorCreatingCourseGeneric": "حدث خطأ أثناء إنشاء الدورة",
+  "titleRequired": "الرجاء إدخال عنوان للدورة",
+  "beginner": "مبتدئ",
+  "intermediate": "متوسط",
+  "advanced": "متقدم",
+  "durationWeeks": "أسابيع (افتراضياً)",
+  "loading": "جاري التحميل..."
+}
 }
