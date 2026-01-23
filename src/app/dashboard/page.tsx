@@ -22,7 +22,10 @@ export default function DashboardPage() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
+  
   const { dict, locale, isLoading } = useLocale();
+  console.log('Dashboard locale/dict', locale, dict?.dashboard?.title);
+
 
   const [mounted, setMounted] = useState(false);
   const [courses, setCourses] = useState<Course[]>([]);
@@ -82,7 +85,7 @@ export default function DashboardPage() {
       </div>
     );
   }
-
+  
   const t = dict.dashboard;
 
   const completedCount = 0;
@@ -134,7 +137,13 @@ export default function DashboardPage() {
   };
 
   return (
+    
     <div className="container">
+      <div className="mb-4 p-2 bg-slate-800 text-xs">
+  <p>Locale in dashboard: {locale}</p>
+  <p>Title in dict: {dict.dashboard.title}</p>
+</div>
+
       {/* Header */}
       <section className="section">
         <div className="flex justify-between items-center mb-8">
