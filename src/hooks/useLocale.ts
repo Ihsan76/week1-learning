@@ -29,7 +29,7 @@ export function useLocale() {
     setLocale(initial);
   }, []);
 
-  // في كل مرة تتغيّر فيها locale: حمّل القاموس وحدِّث اتجاه الصفحة
+  // في كل مرة تتغيّر فيها locale: حمّل القاموس وحدِّث اتجاه الصفحة
   useEffect(() => {
     if (!locale) return;
 
@@ -38,7 +38,9 @@ export function useLocale() {
     const load = async () => {
       setIsLoading(true);
       const d = await getDictionary(locale);
+      
       if (cancelled) return;
+      
       setDict(d);
       setIsLoading(false);
 
@@ -56,11 +58,13 @@ export function useLocale() {
     };
   }, [locale]);
 
-  const changeLocale = (next: Locale) => {
-    setLocale(next);
+  const changeLocale = async (next: Locale) => {
+    // حفظ في localStorage أولاً
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('locale', next);
     }
+    // ثم تغيير locale (يؤدي لتشغيل useEffect)
+    setLocale(next);
   };
 
   return {
