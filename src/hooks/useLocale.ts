@@ -1,46 +1,67 @@
 // src/hooks/useLocale.ts
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { getDictionary, enabledLanguages, defaultLanguage, type Locale } from '@/locales/i18n'
+import { useEffect, useState } from 'react';
+import {
+  getDictionary,
+  enabledLanguages,
+  defaultLanguage,
+  type Locale,
+} from '@/locales/i18n';
 
 export function useLocale() {
-  const [locale, setLocale] = useState<Locale>(defaultLanguage.code as Locale)
-  const [dict, setDict] = useState<any | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [locale, setLocale] = useState<Locale>(
+    defaultLanguage.code as Locale
+  );
+  const [dict, setDict] = useState<any | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // تحديد اللغة الأولية من localStorage مرة واحدة
+  // تحديد اللغة الأولية مرة واحدة
   useEffect(() => {
-    const saved = window.localStorage.getItem('locale') as Locale | null
-    const initial = (saved && enabledLanguages.find(l => l.code === saved))
-      ? saved
-      : (defaultLanguage.code as Locale)
+    if (typeof window === 'undefined') return;
 
-    setLocale(initial)
-  }, [])
+    const saved = window.localStorage.getItem('locale') as Locale | null;
+    const initial =
+      saved && enabledLanguages.find((l) => l.code === saved)
+        ? saved
+        : (defaultLanguage.code as Locale);
 
-  // تحميل القاموس + تحديث اتجاه الصفحة في كل مرة تتغيّر فيها locale
+    setLocale(initial);
+  }, []);
+
+  // في كل مرة تتغيّر فيها locale: حمّل القاموس وحدِّث اتجاه الصفحة
   useEffect(() => {
-    if (!locale) return
+    if (!locale) return;
 
-    setIsLoading(true)
-    getDictionary(locale).then(d => {
-      setDict(d)
-      setIsLoading(false)
-    })
+    let cancelled = false;
 
-    const langConfig = enabledLanguages.find(l => l.code === locale)
-    if (langConfig) {
-      document.documentElement.dir = langConfig.dir
-      document.documentElement.lang = locale
+    const load = async () => {
+      setIsLoading(true);
+      const d = await getDictionary(locale);
+      if (cancelled) return;
+      setDict(d);
+      setIsLoading(false);
+
+      const langConfig = enabledLanguages.find((l) => l.code === locale);
+      if (langConfig) {
+        document.documentElement.dir = langConfig.dir;
+        document.documentElement.lang = locale;
+      }
+    };
+
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  const changeLocale = (next: Locale) => {
+    setLocale(next);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('locale', next);
     }
-  }, [locale])
-
-  const changeLocale = (newLocale: Locale) => {
-    setLocale(newLocale)
-    window.localStorage.setItem('locale', newLocale)
-    // لا نحمّل القاموس هنا، الـ useEffect فوق سيهتم بذلك
-  }
+  };
 
   return {
     locale,
@@ -48,6 +69,6 @@ export function useLocale() {
     isLoading,
     changeLocale,
     availableLanguages: enabledLanguages,
-    currentLanguageConfig: enabledLanguages.find(l => l.code === locale),
-  }
+    currentLanguageConfig: enabledLanguages.find((l) => l.code === locale),
+  };
 }
