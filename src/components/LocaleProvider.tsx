@@ -23,7 +23,7 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
   return (
     <>
       <LocaleSync />
-      <HtmlDirectionSync />  {/* ✅ أضف هذا */}
+     
       {children}
     </>
   )
