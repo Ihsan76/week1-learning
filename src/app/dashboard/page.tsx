@@ -22,8 +22,8 @@ export default function DashboardPage() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
-  
-  const { dict, locale, isLoading } = useLocale();
+  const { locale, dict, isLoading } = useLocale();
+
   console.log('Dashboard locale/dict', locale, dict?.dashboard?.title);
 
 
