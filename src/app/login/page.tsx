@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
 import { useLocaleContext } from '@/context/LocaleContext';
@@ -20,7 +21,7 @@ export default function LoginPage() {
 
   const t = dict.auth;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -72,7 +73,8 @@ export default function LoginPage() {
             <p className="text-gray-300 text-sm">
               {t.noAccount}{' '}
               <a
-                href="/register" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                href="/register"
+                className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
               >
                 {t.signUp}
               </a>
@@ -154,7 +156,8 @@ export default function LoginPage() {
           <p className="text-center text-gray-400 text-sm">
             {locale === 'ar' ? 'ليس لديك حساب؟' : 'New to Week1 Learning?'}{' '}
             <a
-              href="/register" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+              href="/register"
+              className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
             >
               {t.signUp}
             </a>
