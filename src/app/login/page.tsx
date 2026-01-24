@@ -72,8 +72,7 @@ export default function LoginPage() {
             <p className="text-gray-300 text-sm">
               {t.noAccount}{' '}
               <a
-                href="/register"
-                className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                href="/register" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
               >
                 {t.signUp}
               </a>
@@ -155,8 +154,7 @@ export default function LoginPage() {
           <p className="text-center text-gray-400 text-sm">
             {locale === 'ar' ? 'ليس لديك حساب؟' : 'New to Week1 Learning?'}{' '}
             <a
-              href="/register"
-              className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+              href="/register" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
             >
               {t.signUp}
             </a>
