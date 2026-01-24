@@ -3,33 +3,23 @@
 import Link from 'next/link';
 import { useLocaleStore } from '@/lib/localeStore';
 import { allWeeks } from '@/lib/curriculum';
+import { useLocaleContext } from '@/context/LocaleContext';
 
-const getContent = (locale: string) => {
-  if (locale === 'ar') {
-    return {
-      allWeeks: 'جميع الأسابيع',
-      selectWeek: 'اختر الأسبوع الذي تريد دراسته',
-      view: 'عرض',
-    };
-  }
-  return {
-    allWeeks: 'All Weeks',
-    selectWeek: 'Select a week to study',
-    view: 'View',
-  };
-};
+
+
 
 export default function WeeksPage() {
-  const { locale } = useLocaleStore((state) => state);
-  const content = getContent(locale);
+  const { dict, locale, isLoading } = useLocaleContext();
+  if (isLoading || !dict) return null;
 
-  return (
+  const t = dict.allWeeks;
+    return (
     <div className="min-h-screen bg-bg-dark pt-24 pb-12">
       <div className="container mx-auto px-4 md:px-8">
         {/* Page Title */}
         <div className="mb-12">
-          <h1 className="hero-title mb-4">{content.allWeeks}</h1>
-          <p className="text-text-slate-400">{content.selectWeek}</p>
+          <h1 className="hero-title mb-4">{t.allWeeks}</h1>
+          <p className="text-text-slate-400">{t.selectWeek}</p>
         </div>
 
         {/* Weeks Grid */}
@@ -45,7 +35,7 @@ export default function WeeksPage() {
                 {locale === 'ar' ? week.titleAr : week.title}
               </h3>
               <button className="btn-primary px-6 py-2 rounded-lg text-sm">
-                {content.view}
+                {t.view}
               </button>
             </Link>
           ))}

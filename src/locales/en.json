@@ -27,22 +27,22 @@
     "projects": "Practical Projects",
     "projectsDesc": "Real world applications",
     "bestPractices": "Best Practices",
-    "bestPracticesDesc": "Professional standards"
+    "bestPracticesDesc": "Professional standards",
+    "technologies": {
+      "title": "Technologies Used 💻",
+      "nextjs": "Advanced React Framework",
+      "django": "Python Web Framework",
+      "react": "Powerful UI Library",
+      "typescript": "Type Safety",
+      "apis": "RESTful Services",
+      "zustand": "State Management"
+    }
   },
   "hero": {
     "title": "Learn Web Development 🌐",
     "subtitle": "Integrated Learning Platform",
     "description": "🚀 Ready to transform your ideas into professional projects and applications",
     "cta": "Go to Dashboard"
-  },
-  "technologies": {
-    "title": "Technologies Used 💻",
-    "nextjs": "Advanced React Framework",
-    "django": "Python Web Framework",
-    "react": "Powerful UI Library",
-    "typescript": "Type Safety",
-    "apis": "RESTful Services",
-    "zustand": "State Management"
   },
   "features": {
     "title": "Main Features ⭐",
@@ -78,7 +78,9 @@
     "logout": "Logout",
     "passwordMismatch": "Passwords do not match",
     "error": "An error occurred",
-    "success": "Success"
+    "success": "Success",
+    "loading": "Loading...",
+    "security": "Data secured with SSL"
   },
   "footer": {
     "copyright": "© 2026 Week1 Learning - All Rights Reserved",
@@ -97,36 +99,244 @@
     "recent": "Recent Lessons"
   },
   "dashboard": {
-  "title": "Dashboard",
-  "welcome": "Welcome back",
-  "stats": "Statistics",
-  "courses": "Courses",
-  "completedCourses": "Completed Courses",
-  "inProgress": "In Progress",
-  "hoursLearned": "Hours Learned",
-  "recentCourses": "Recent Courses",
-  "startLearning": "Start Learning",
-  "continue": "Continue",
-  "level": "Level",
-  "duration": "Duration",
-  "logout": "Logout",
-  "viewWeekOne": "View Week 1 Curriculum",
-  "noCourses": "No courses yet",
-  "newCourseTitle": "Course title",
-  "newCourseDescription": "Short description",
-  "newCourseLevel": "Level",
-  "createCourse": "Create new course",
-  "creatingCourse": "Creating course...",
-  "loadingCourses": "Loading courses...",
-  "errorLoadingCourses": "Failed to load courses",
-  "errorCreatingCourse": "Failed to create course",
-  "errorCreatingCourseGeneric": "An error occurred while creating the course",
-  "titleRequired": "Please enter a course title",
-  "beginner": "Beginner",
-  "intermediate": "Intermediate",
-  "advanced": "Advanced",
-  "durationWeeks": "weeks (assumed)",
-  "loading": "Loading..."
-}
-
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "stats": "Statistics",
+    "courses": "Courses",
+    "completedCourses": "Completed Courses",
+    "inProgress": "In Progress",
+    "hoursLearned": "Hours Learned",
+    "recentCourses": "Recent Courses",
+    "startLearning": "Start Learning",
+    "continue": "Continue",
+    "level": "Level",
+    "duration": "Duration",
+    "logout": "Logout",
+    "viewWeekOne": "View Week 1 Curriculum",
+    "noCourses": "No courses yet",
+    "newCourseTitle": "Course title",
+    "newCourseDescription": "Short description",
+    "newCourseLevel": "Level",
+    "createCourse": "Create new course",
+    "creatingCourse": "Creating course...",
+    "loadingCourses": "Loading courses...",
+    "errorLoadingCourses": "Failed to load courses",
+    "errorCreatingCourse": "Failed to create course",
+    "errorCreatingCourseGeneric": "An error occurred while creating the course",
+    "titleRequired": "Please enter a course title",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "durationWeeks": "weeks (assumed)",
+    "loading": "Loading..."
+  },
+  "resource": {
+    "title": "Learning Resources",
+    "description": "Important references and materials for learning",
+    "reference": "References",
+    "tools": "Tools",
+    "readMore": "Read More",
+    "resources": [
+      {
+        "title": "MDN Web Docs",
+        "description": "Comprehensive web technology reference",
+        "link": "https://developer.mozilla.org",
+        "icon": "🎨"
+      },
+      {
+        "title": "W3C Standards",
+        "description": "Web standards and specifications",
+        "link": "https://www.w3.org",
+        "icon": "🌐"
+      }
+    ]
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "email": "Email Address",
+    "language": "Language",
+    "preferences": "Preferences",
+    "privacy": "Privacy",
+    "theme": "Application Theme",
+    "darkMode": "Dark Mode",
+    "save": "Save",
+    "logout": "Logout",
+    "selectLanguage": "Select your preferred language",
+    "profile": "Profile",
+    "updateProfile": "Update Profile",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "saveChanges": "Save Changes",
+    "passwordMismatch": "New passwords do not match",
+    "errorUpdatingProfile": "An error occurred while updating the profile",
+    "successUpdatingProfile": "Profile updated successfully",
+    "privacyText": "Your privacy is important to us. We collect minimal data and never share it with third parties."
+  },
+  "weekOne": {
+    "title": "Week 1: Introduction to Web Development",
+    "introduction": "Introduction to Web Development",
+    "lesson": "Lessons",
+    "projects": "Projects",
+    "startLesson": "Start Lesson",
+    "completeLesson": "Complete Lesson",
+    "lessonCompleted": "Lesson Completed",
+    "nextLesson": "Next Lesson",
+    "previousLesson": "Previous Lesson",
+    "congratulations": "Congratulations! You have completed the first week.",
+    "shareProgress": "Share your progress with friends",
+    "schedule": "Week Schedule",
+    "day": "Day",
+    "topic": "Topic",
+    "duration": "Duration",
+    "resource": "Resources",
+    "exercises": "Exercises",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "overview": "In this week, you will learn the basics of web development, including HTML, CSS, and JavaScript.",
+    "weekSchedule": [
+      {
+        "title": "Lesson 1: Understanding the Web",
+        "description": "Learn how the web works, including servers, clients, and browsers.",
+        "duration": "2 hours",
+        "resources": [
+          "Introduction to HTML",
+          "HTML Tags & Elements"
+        ],
+        "exercises": [
+          "Create a basic HTML page"
+        ]
+      },
+      {
+        "title": "Lesson 2: HTML Basics",
+        "description": "Get started with HTML and learn how to structure web pages.",
+        "duration": "2 hours",
+        "resources": [
+          "Introduction to HTML",
+          "HTML Tags & Elements"
+        ],
+        "exercises": [
+          "Create a basic HTML page"
+        ]
+      },
+      {
+        "title": "Lesson 3: CSS Styling",
+        "description": "Discover how to style web pages using CSS.",
+        "duration": "2 hours",
+        "resources": [
+          "CSS Basics",
+          "Selectors & Properties"
+        ],
+        "exercises": [
+          "Style HTML with CSS"
+        ]
+      },
+      {
+        "title": "Lesson 4: JavaScript Fundamentals",
+        "description": "Learn the basics of JavaScript and how to make web pages interactive.",
+        "duration": "3 hours",
+        "resources": [
+          "JS Variables",
+          "Functions & Events"
+        ],
+        "exercises": [
+          "Build interactive components"
+        ]
+      },
+      {
+        "title": "Lesson 5: Responsive Design",
+        "description": "Learn how to create responsive layouts for different screen sizes.",
+        "duration": "2 hours",
+        "resources": [
+          "Mobile First",
+          "Media Queries"
+        ],
+        "exercises": [
+          "Create responsive layout"
+        ]
+      },
+      {
+        "title": "Project & Review",
+        "description": "Review what you learned in the first week and complete the project.",
+        "duration": "4 hours",
+        "resources": [
+          "Week 1 Summary",
+          "Project Guidelines"
+        ],
+        "exercises": [
+          "Complete Week 1 Project"
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "title": "HTML Reference",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/HTML"
+      },
+      {
+        "title": "CSS Reference",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/CSS"
+      },
+      {
+        "title": "JavaScript Guide",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ]
+  },
+  "allWeeks": {
+    "title": "All Curricula",
+    "description": "Browse all available learning curricula",
+    "viewCurriculum": "View Curriculum",
+    "allWeeks": "All Weeks",
+    "selectWeek": "Select the week you want to study",
+    "view": "View"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "management": "Platform Management",
+    "users": "Total Users",
+    "courses": "Total Courses",
+    "analytics": "Analytics",
+    "recentActivity": "Recent Activity",
+    "logs": "Activity logs and system updates will be displayed here.",
+    "sideBarItems": [
+      {
+        "href": "/admin",
+        "label": "Admin Dashboard",
+        "icon": "📊"
+      },
+      {
+        "href": "/admin/users",
+        "label": "Users Management",
+        "icon": "👥"
+      },
+      {
+        "href": "/admin/settings",
+        "label": "System Settings",
+        "icon": "⚙️"
+      },
+      {
+        "href": "/admin/content",
+        "label": "Content Management",
+        "icon": "📝"
+      },
+      {
+        "href": "/admin/reports",
+        "label": "Reports",
+        "icon": "📈"
+      }
+    ],
+    "usersLabel": "Users",
+    "coursesLabel": "Courses",
+    "analyticsLabel": "Analytics",
+    "recentActivityLabel": "Recent Activity",
+    "dashboard": "Dashboard",
+    "content": "Content",
+    "settings": "Settings"
+  }
 }

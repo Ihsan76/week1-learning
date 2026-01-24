@@ -1,39 +1,38 @@
+// src/app/page.tsx
 'use client';
-import Link from 'next/link';
-import { useAuthStore } from '@/lib/store';
-import { useLocaleStore } from '@/lib/localeStore';
-import { useEffect, useState } from 'react';
-import ar from '@/locales/ar.json';
-import en from '@/locales/en.json';
 
-const translations = { ar, en };
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useAuthStore } from '@/lib/store';
+import { useLocaleContext } from '@/context/LocaleContext';
 
 export default function Home() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const locale = useLocaleStore((state) => state.locale);
+  const { dict, isLoading } = useLocaleContext();
   const [mounted, setMounted] = useState(false);
 
+  // لتفادي مشاكل الهيدرشن
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted || isLoading || !dict) return null;
 
-  const t = translations[locale as keyof typeof translations] || translations.en;
+  const t = dict.home;
 
   return (
     <div className="container">
       {/* Hero */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title">{t.home.title}</h1>
-          <p className="hero-subtitle">{t.home.subtitle}</p>
+          <h1 className="hero-title">{t.title}</h1>
+          <p className="hero-subtitle">{t.subtitle}</p>
         </div>
       </section>
 
       {/* Technologies */}
       <section className="section">
-        <h2 className="section-title">{t.home.tech}</h2>
+        <h2 className="section-title">{t.tech}</h2>
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-icon">⚡</div>
@@ -70,40 +69,40 @@ export default function Home() {
 
       {/* Features */}
       <section className="section">
-        <h2 className="section-title">{t.home.features} ⭐</h2>
+        <h2 className="section-title">{t.features} ⭐</h2>
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-icon">🎯</div>
-            <h3 className="feature-title">{t.home.simpleLesson}</h3>
-            <p className="section-subtitle">{t.home.simpleLessonDesc}</p>
+            <h3 className="feature-title">{t.simpleLesson}</h3>
+            <p className="section-subtitle">{t.simpleLessonDesc}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">🚀</div>
-            <h3 className="feature-title">{t.home.projects}</h3>
-            <p className="section-subtitle">{t.home.projectsDesc}</p>
+            <h3 className="feature-title">{t.projects}</h3>
+            <p className="section-subtitle">{t.projectsDesc}</p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">💡</div>
-            <h3 className="feature-title">{t.home.bestPractices}</h3>
-            <p className="section-subtitle">{t.home.bestPracticesDesc}</p>
+            <h3 className="feature-title">{t.bestPractices}</h3>
+            <p className="section-subtitle">{t.bestPracticesDesc}</p>
           </div>
         </div>
       </section>
 
       {/* CTA */}
       <section className="section-cta">
-        <h2 className="section-title">{t.home.ready}</h2>
-        <p className="section-subtitle">{t.home.readyText}</p>
+        <h2 className="section-title">{t.ready}</h2>
+        <p className="section-subtitle">{t.readyText}</p>
         {!isLoggedIn && (
           <Link href="/dashboard" className="btn-primary">
-            {t.home.cta}
+            {t.cta}
           </Link>
         )}
       </section>
 
       {/* Footer */}
       <footer className="footer">
-        <p>© 2024 Week1 Learning - {t.home.copyright}</p>
+        <p>© 2024 Week1 Learning - {t.copyright}</p>
       </footer>
     </div>
   );

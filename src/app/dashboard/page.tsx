@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
-// import { useLocale } from '@/hooks/useLocale';
+
 import { useLocaleContext } from '@/context/LocaleContext';
 
 type Course = {
@@ -23,13 +23,9 @@ export default function DashboardPage() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
-  // const { locale, dict, isLoading  } = useLocale();
-  
   const { locale, dict, isLoading } = useLocaleContext();
 
-  console.log('Dashboard locale/dict', locale, dict?.dashboard?.title);
-
-
+ 
   const [mounted, setMounted] = useState(false);
   const [courses, setCourses] = useState<Course[]>([]);
   const [loadingCourses, setLoadingCourses] = useState(false);
@@ -142,11 +138,7 @@ export default function DashboardPage() {
   return (
     
     <div className="container">
-      <div className="mb-4 p-2 bg-slate-800 text-xs">
-  <p>Locale in dashboard: {locale}</p>
-  <p>Title in dict: {dict.dashboard.title}</p>
-</div>
-
+   
       {/* Header */}
       <section className="section">
         <div className="flex justify-between items-center mb-8">
