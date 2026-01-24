@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
-import { useLocale } from '@/hooks/useLocale';
+// import { useLocale } from '@/hooks/useLocale';
+import { useLocaleContext } from '@/context/LocaleContext';
 
 type Course = {
   id: number;
@@ -22,7 +23,9 @@ export default function DashboardPage() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
-  const { locale, dict, isLoading  } = useLocale();
+  // const { locale, dict, isLoading  } = useLocale();
+  
+  const { locale, dict, isLoading } = useLocaleContext();
 
   console.log('Dashboard locale/dict', locale, dict?.dashboard?.title);
 
