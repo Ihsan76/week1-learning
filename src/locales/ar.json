@@ -369,6 +369,12 @@
       "filterActive": "النشطون",
       "filterInactive": "غير النشطين",
       "loadingUsers": "جاري تحميل المستخدمين",
-      "registeredAt": "تاريخ الانضمام"
+      "registeredAt": "تاريخ الانضمام",
+      "Language": "اللغة",
+      "editUserTitle": "تعديل المستخدم",
+      "timezone": "المنطقة الزمنية",
+      "cancel": "إلغاء",
+      "saveing": "... جاري الحفظ",
+      "saveChanges": "حفظ التغييرات"
   }}
 }

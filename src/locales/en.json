@@ -367,7 +367,13 @@
       "filterActive": "Active",
       "filterInactive": "Inactive",
       "loadingUsers": "Loading users...",
-      "registeredAt": "Registered At"
+      "registeredAt": "Registered At",
+      "Language": "Language",
+      "editUserTitle": "Edit User",
+      "timezone": "Timezone",
+      "cancel": "Cancel",
+      "saveing": "Saving...",
+      "saveChanges": "Save Changes"
   }
   }
 }
