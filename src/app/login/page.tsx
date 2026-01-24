@@ -45,6 +45,12 @@ export default function LoginPage() {
 
       const { user } = data;
 
+      
+      console.log('user from API', user);
+      setAuth(user.email);
+      console.log('store after login', useAuthStore.getState());
+
+
       if (!user) {
         setError(t.error);
         return;
