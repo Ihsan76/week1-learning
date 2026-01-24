@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
 import { useLocaleContext } from '@/context/LocaleContext';
@@ -13,14 +14,14 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const setAuth = useAuthStore((state) => state.login);
 
   const { dict, locale, isLoading } = useLocaleContext();
   if (isLoading || !dict) return null;
 
   const t = dict.auth;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -49,7 +50,7 @@ export default function LoginPage() {
         return;
       }
 
-      setAuth(user);
+      setAuth(user.email);
       router.push('/dashboard');
     } catch (err) {
       setError(t.error);
