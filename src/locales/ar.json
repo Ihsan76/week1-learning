@@ -362,6 +362,8 @@
       "userDeleted": "تم حذف المستخدم بنجاح",
       "errorDeletingUser": "حدث خطأ أثناء حذف المستخدم",
       "errorLoadingUsers": "حدث خطأ أثناء تحميل المستخدمين ",
+      "errorUpdatingProfile": "حدث خطأ أثناء تحديث المستخدم",
+      "successUpdatingProfile": "تم تحديث المستخدم بنجاح",
       "filterAll": "الكل",
       "filterAdmins": "المسؤولون", 
       "filterActive": "النشطون",

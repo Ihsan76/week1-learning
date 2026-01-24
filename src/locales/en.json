@@ -360,6 +360,8 @@
       "userDeleted": "User deleted successfully",
       "errorDeletingUser": "An error occurred while deleting the user",
       "errorLoadingUsers": "An error occurred while loading users",
+      "errorUpdatingProfile": "An error occurred while updating the profile",
+      "successUpdatingProfile": "Profile updated successfully",
       "filterAll": "All",
       "filterAdmins": "Admins", 
       "filterActive": "Active",

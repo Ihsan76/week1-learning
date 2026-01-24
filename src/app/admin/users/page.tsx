@@ -24,18 +24,16 @@ type Filter = 'all' | 'active' | 'inactive';
 export default function UsersPage() {
   const router = useRouter();
   const { isLoggedIn } = useAuthStore((state) => state);
+  const { locale, dict, isLoading } = useLocaleContext();
 
   const [isMounted, setIsMounted] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [savingEdit, setSavingEdit] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
-  const { locale, dict, isLoading } = useLocaleContext();
-  if (isLoading || !dict) return null;
-
-  const content = dict.admin.usersContent;
-
 
   useEffect(() => {
     setIsMounted(true);
@@ -45,7 +43,7 @@ export default function UsersPage() {
   }, [isLoggedIn, router]);
 
   useEffect(() => {
-    if (!isMounted || !isLoggedIn) return;
+    if (!isMounted || !isLoggedIn || !dict || isLoading) return;
 
     async function fetchUsers() {
       setLoading(true);
@@ -55,14 +53,26 @@ export default function UsersPage() {
         const data: User[] = await apiFetch('/api/auth/users/');
         setUsers(data);
       } catch (err) {
-        setError(content.errorLoadingUsers);
+        setError(dict.admin.usersContent.errorLoadingUsers);
       } finally {
         setLoading(false);
       }
     }
 
     fetchUsers();
-  }, [isMounted, isLoggedIn]);
+  }, [isMounted, isLoggedIn, dict, isLoading]);
+  if (!dict) return null;
+  const content = dict.admin.usersContent;
+  // ... بقية الكود كما هو
+
+  if (isLoading || !dict || !isMounted) {
+    return (
+      <div className="min-h-screen bg-slate-900 p-8 text-slate-200">
+        {content.loading}
+      </div>
+    );
+  }
+
 
   const filteredUsers = users.filter((user) =>
     filter === 'all'
@@ -92,6 +102,60 @@ export default function UsersPage() {
       )
     );
     setEditingId(null);
+  };
+
+  const openEditModal = (user: User) => {
+    setEditingUser(user);
+  };
+
+  const closeEditModal = () => {
+    setEditingUser(null);
+  };
+
+  const handleEditFieldChange = (
+    field: keyof Pick<User, 'full_name' | 'role' | 'language' | 'timezone' | 'is_active'>,
+    value: string | boolean
+  ) => {
+    if (!editingUser) return;
+    setEditingUser({
+      ...editingUser,
+      [field]: value as any,
+    });
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editingUser) return;
+
+    setSavingEdit(true);
+    setError('');
+
+    try {
+      const payload = {
+        full_name: editingUser.full_name,
+        role: editingUser.role,
+        language: editingUser.language,
+        timezone: editingUser.timezone,
+        is_active: editingUser.is_active,
+      };
+
+      const updated: User = await apiFetch(
+        `/api/auth/users/${editingUser.id}/update/`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify(payload),
+        }
+      );
+
+      setUsers((prev) =>
+        prev.map((u) => (u.id === updated.id ? updated : u))
+      );
+      closeEditModal();
+    } catch (err) {
+      console.error(err);
+      setError(content.errorUpdatingUser);
+    } finally {
+      setSavingEdit(false);
+    }
   };
 
   if (!isMounted) return null;
@@ -154,7 +218,7 @@ export default function UsersPage() {
               <thead className="bg-slate-700 border-b border-slate-600">
                 <tr>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-white">
-                   { content.name}
+                    {content.name}
                   </th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-white">
                     {content.email}
@@ -230,7 +294,13 @@ export default function UsersPage() {
                     <td className="px-3 py-4 text-slate-400 text-sm">
                       {new Date(user.created_at).toLocaleDateString('ar-EG')}
                     </td>
-                    <td className="px-3 py-4">
+                    <td className="px-3 py-4 flex gap-2">
+                      <button
+                        onClick={() => openEditModal(user)}
+                        className="px-2 py-1 bg-slate-600 text-white rounded text-sm hover:bg-slate-500 transition"
+                      >
+                        {content.edit}
+                      </button>
                       <button
                         onClick={() => handleDelete(user.id)}
                         className="px-2 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition"
@@ -245,6 +315,163 @@ export default function UsersPage() {
           )}
         </div>
       </div>
+      {editingUser && (
+  <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/70 backdrop-blur-sm">
+    <div className="w-full max-w-2xl rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 bg-slate-950/70">
+        <div>
+          <h2 className="text-lg font-semibold text-white">
+            {content.editUserTitle}
+          </h2>
+          <p className="text-xs text-slate-400">
+            {content.editUserSubtitle}
+          </p>
+        </div>
+        <button
+          onClick={closeEditModal}
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white text-lg"
+          disabled={savingEdit}
+        >
+          ×
+        </button>
+      </div>
+
+      {/* Body */}
+      <div className="px-6 py-5 space-y-5">
+        {/* صف 1: الإيميل + الاسم */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-300">
+              {content.emailLabel}
+            </label>
+            <input
+              type="email"
+              value={editingUser.email}
+              readOnly
+              className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-300"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-300">
+              {content.fullNameLabel}
+            </label>
+            <input
+              type="text"
+              value={editingUser.full_name}
+              onChange={(e) =>
+                handleEditFieldChange('full_name', e.target.value)
+              }
+              className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+              placeholder={content.fullNamePlaceholder}
+            />
+          </div>
+        </div>
+
+        {/* صف 2: الدور + الحالة */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-300">
+              {content.role}
+            </label>
+            <select
+              value={editingUser.role}
+              onChange={(e) =>
+                handleEditFieldChange(
+                  'role',
+                  e.target.value as User['role']
+                )
+              }
+              className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+            >
+              <option value="student">{content.student}</option>
+              <option value="instructor">{content.instructor}</option>
+              <option value="admin">{content.admin}</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-300">
+              {content.status}
+            </label>
+            <select
+              value={editingUser.is_active ? 'active' : 'inactive'}
+              onChange={(e) =>
+                handleEditFieldChange(
+                  'is_active',
+                  e.target.value === 'active'
+                )
+              }
+              className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+            >
+              <option value="active">{content.active}</option>
+              <option value="inactive">{content.inactive}</option>
+            </select>
+          </div>
+        </div>
+
+        {/* صف 3: اللغة + المنطقة الزمنية */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-300">
+              {content.language}
+            </label>
+            <select
+              value={editingUser.language}
+              onChange={(e) =>
+                handleEditFieldChange('language', e.target.value)
+              }
+              className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+            >
+              <option value="ar">العربية</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-300">
+              {content.timezone}
+            </label>
+            <input
+              type="text"
+              value={editingUser.timezone}
+              onChange={(e) =>
+                handleEditFieldChange('timezone', e.target.value)
+              }
+              className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="flex justify-between items-center border-t border-slate-800 px-6 py-3 bg-slate-950/70">
+        <span className="text-xs text-slate-500">
+          {content.editHint}
+        </span>
+        <div className="flex gap-2">
+          <button
+            onClick={closeEditModal}
+            className="rounded-lg bg-slate-700 px-4 py-2 text-sm text-slate-200 hover:bg-slate-600"
+            disabled={savingEdit}
+          >
+            {content.cancel}
+          </button>
+          <button
+            onClick={handleSaveEdit}
+            className="rounded-lg bg-cyan-600 px-4 py-2 text-sm text-white hover:bg-cyan-700 disabled:opacity-60"
+            disabled={savingEdit}
+          >
+            {savingEdit ? content.saving : content.saveChanges}
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+)}
+
+
+    </div >
   );
 }
