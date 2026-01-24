@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Navbar from "@/components/Navbar"
 // import LocaleProvider from '@/components/LocaleProvider'  // ✅ استيراد صحيح
 import './globals.css'
+import { LocaleProvider } from '@/context/LocaleContext';
 
 export const metadata: Metadata = {
   title: 'Week1 Learning',
@@ -17,8 +18,10 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className="font-sans bg-slate-900 text-white">
+        <LocaleProvider>
           <Navbar />
           {children}
+        </LocaleProvider>
       </body>
     </html>
   )
