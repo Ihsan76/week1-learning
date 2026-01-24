@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/lib/store';
-import { useLocale } from '@/hooks/useLocale';
+// import { useLocale } from '@/hooks/useLocale';
+import { useLocaleContext } from '@/context/LocaleContext';
+
 
 interface NavItem {
   href: string;
@@ -24,7 +26,9 @@ export default function Navbar() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const logout = useAuthStore((state) => state.logout);
 
-  const { locale, dict, isLoading, changeLocale } = useLocale();
+  // const { locale, dict, isLoading, changeLocale } = useLocale();
+  const { locale, dict, isLoading, changeLocale } = useLocaleContext();
+
   const [mounted, setMounted] = useState(false);
   const [showAdminDropdown, setShowAdminDropdown] = useState(false);
 
