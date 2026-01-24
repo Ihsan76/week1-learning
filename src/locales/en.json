@@ -337,6 +337,35 @@
     "recentActivityLabel": "Recent Activity",
     "dashboard": "Dashboard",
     "content": "Content",
-    "settings": "Settings"
+    "settings": "Settings",
+    "usersContent": {
+      "title": "Users Management",
+      "description": "View, edit, and delete users",
+      "search": "Search users...",
+      "id": "ID",
+      "name": "Name",
+      "status": "Status",
+      "email": "Email",
+      "role": "Role",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "active": "Active",
+      "inactive": "Inactive",
+      "admin": "Admin",
+      "student": "Student",
+      "instructor": "Instructor",
+      "noUsers": "No users to display",
+      "confirmDelete": "Are you sure you want to delete this user?",
+      "userDeleted": "User deleted successfully",
+      "errorDeletingUser": "An error occurred while deleting the user",
+      "errorLoadingUsers": "An error occurred while loading users",
+      "filterAll": "All",
+      "filterAdmins": "Admins", 
+      "filterActive": "Active",
+      "filterInactive": "Inactive",
+      "loadingUsers": "Loading users...",
+      "registeredAt": "Registered At"
+  }
   }
 }

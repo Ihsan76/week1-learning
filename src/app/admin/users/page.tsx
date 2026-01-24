@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
 import { apiFetch } from '@/lib/api';
+import { useLocaleContext } from '@/context/LocaleContext';
+
 
 interface User {
   id: number;
@@ -29,6 +31,11 @@ export default function UsersPage() {
   const [error, setError] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
   const [filter, setFilter] = useState<Filter>('all');
+  const { locale, dict, isLoading } = useLocaleContext();
+  if (isLoading || !dict) return null;
+
+  const content = dict.admin.usersContent;
+
 
   useEffect(() => {
     setIsMounted(true);
@@ -48,7 +55,7 @@ export default function UsersPage() {
         const data: User[] = await apiFetch('/api/auth/users/');
         setUsers(data);
       } catch (err) {
-        setError('فشل في تحميل قائمة المستخدمين');
+        setError(content.errorLoadingUsers);
       } finally {
         setLoading(false);
       }
@@ -73,7 +80,7 @@ export default function UsersPage() {
       setUsers((prev) => prev.filter((user) => user.id !== id));
     } catch (err) {
       console.error(err);
-      alert('تعذّر تنفيذ الحذف، حاول مرة أخرى.');
+      alert(content.errorDeletingUser);
     }
   };
 
@@ -93,8 +100,8 @@ export default function UsersPage() {
     <div className="min-h-screen bg-slate-900 p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">إدارة المستخدمين</h1>
-          <p className="text-slate-400">Manage users, roles, and status</p>
+          <h1 className="text-4xl font-bold text-white mb-2">{content.title}</h1>
+          <p className="text-slate-400">{content.description}</p>
         </div>
 
         {error && (
@@ -111,7 +118,7 @@ export default function UsersPage() {
               : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
               }`}
           >
-            الكل ({users.length})
+            {content.filterAll} ({users.length})
           </button>
           <button
             onClick={() => setFilter('active')}
@@ -120,7 +127,7 @@ export default function UsersPage() {
               : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
               }`}
           >
-            نشط ({users.filter((u) => u.is_active).length})
+            {content.active} ({users.filter((u) => u.is_active).length})
           </button>
           <button
             onClick={() => setFilter('inactive')}
@@ -129,40 +136,40 @@ export default function UsersPage() {
               : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
               }`}
           >
-            غير نشط ({users.filter((u) => !u.is_active).length})
+            {content.inactive} ({users.filter((u) => !u.is_active).length})
           </button>
         </div>
 
         <div className="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden">
           {loading ? (
             <div className="p-6 text-center text-slate-300 text-sm">
-              جاري تحميل المستخدمين...
+              {content.loadingUsers}...
             </div>
           ) : filteredUsers.length === 0 ? (
             <div className="p-6 text-center text-slate-300 text-sm">
-              لا توجد بيانات لعرضها.
+              {content.noUsers}
             </div>
           ) : (
             <table className="w-full">
               <thead className="bg-slate-700 border-b border-slate-600">
                 <tr>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-white">
-                    الاسم
+                   { content.name}
                   </th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-white">
-                    البريد الإلكتروني
+                    {content.email}
                   </th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-white">
-                    الدور
+                    {content.role}
                   </th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-white">
-                    الحالة
+                    {content.status}
                   </th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-white">
-                    تاريخ الانضمام
+                    {content.registeredAt}
                   </th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-white">
-                    الإجراءات
+                    {content.actions}
                   </th>
                 </tr>
               </thead>
@@ -187,10 +194,10 @@ export default function UsersPage() {
                           }`}
                       >
                         {user.role === 'admin'
-                          ? 'مسؤول'
+                          ? content.admin
                           : user.role === 'instructor'
-                            ? 'مدرّس'
-                            : 'طالب'}
+                            ? content.instructor
+                            : content.student}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -205,8 +212,8 @@ export default function UsersPage() {
                           }
                           className="px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm"
                         >
-                          <option value="active">نشط</option>
-                          <option value="inactive">غير نشط</option>
+                          <option value="active">{content.active}</option>
+                          <option value="inactive">{content.inactive}</option>
                         </select>
                       ) : (
                         <span
@@ -216,7 +223,7 @@ export default function UsersPage() {
                             }`}
                           onClick={() => setEditingId(user.id)}
                         >
-                          {user.is_active ? 'نشط' : 'غير نشط'}
+                          {user.is_active ? content.active : content.inactive}
                         </span>
                       )}
                     </td>
@@ -228,7 +235,7 @@ export default function UsersPage() {
                         onClick={() => handleDelete(user.id)}
                         className="px-2 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition"
                       >
-                        حذف
+                        {content.delete}
                       </button>
                     </td>
                   </tr>

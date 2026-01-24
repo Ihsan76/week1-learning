@@ -339,6 +339,34 @@
     "recentActivityLabel": "النشاط الأخير",
     "dashboard": "لوحة التحكم",
     "content": "المحتوى",
-    "settings": "الإعدادات"
-  }
+    "settings": "الإعدادات", 
+    "usersContent": {
+      "title": "إدارة المستخدمين",
+      "description": "عرض وتحرير وحذف المستخدمين",
+      "search": "بحث المستخدمين...",
+      "id": "المعرف",
+      "name": "الاسم",
+      "status": "الحالة",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "actions": "الإجراءات",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "admin": "مسؤول",
+      "student": "طالب",
+      "instructor": "مدرب",
+      "noUsers": "لا توجد مستخدمين للعرض",
+      "confirmDelete": "هل أنت متأكد من حذف هذا المستخدم؟",
+      "userDeleted": "تم حذف المستخدم بنجاح",
+      "errorDeletingUser": "حدث خطأ أثناء حذف المستخدم",
+      "errorLoadingUsers": "حدث خطأ أثناء تحميل المستخدمين ",
+      "filterAll": "الكل",
+      "filterAdmins": "المسؤولون", 
+      "filterActive": "النشطون",
+      "filterInactive": "غير النشطين",
+      "loadingUsers": "جاري تحميل المستخدمين",
+      "registeredAt": "تاريخ الانضمام"
+  }}
 }
