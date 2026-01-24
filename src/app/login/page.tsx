@@ -4,11 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
-import { useLocaleStore } from '@/lib/localeStore';
-import ar from '@/locales/ar.json';
-import en from '@/locales/en.json';
-
-const translations = { ar, en };
+import { useLocaleContext } from '@/context/LocaleContext';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,13 +12,13 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const locale = useLocaleStore((state) => state.locale);
   const router = useRouter();
-
-  // من الـ store الجديد: يخزن user + token
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  const t = translations[locale as keyof typeof translations] || translations.en;
+  const { dict, locale, isLoading } = useLocaleContext();
+  if (isLoading || !dict) return null;
+
+  const t = dict.auth;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,24 +38,21 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || t.auth.error);
+        setError(data.error || t.error);
         return;
       }
 
-      // نتوقع من الباك إند: { user: {...}, token: "..." }
       const { user } = data;
 
       if (!user) {
-        setError(t.auth.error);
+        setError(t.error);
         return;
       }
 
-      // تخزين بيانات المستخدم/التوكن
       setAuth(user);
-
       router.push('/dashboard');
     } catch (err) {
-      setError(t.auth.error);
+      setError(t.error);
     } finally {
       setLoading(false);
     }
@@ -73,16 +66,16 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center space-y-3">
             <div className="inline-block p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
-              {/* تركتها فارغة بدون أيقونة */}
+              {/* icon space */}
             </div>
-            <h1 className="text-3xl font-bold text-white">{t.auth.signIn}</h1>
+            <h1 className="text-3xl font-bold text-white">{t.signIn}</h1>
             <p className="text-gray-300 text-sm">
-              {t.auth.noAccount}{' '}
+              {t.noAccount}{' '}
               <a
                 href="/register"
                 className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
               >
-                {t.auth.signUp}
+                {t.signUp}
               </a>
             </p>
           </div>
@@ -99,7 +92,7 @@ export default function LoginPage() {
             {/* Email Field */}
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-200">
-                {t.auth.email}
+                {t.email}
               </label>
               <div className="relative">
                 <input
@@ -116,7 +109,7 @@ export default function LoginPage() {
             {/* Password Field */}
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-200">
-                {t.auth.password}
+                {t.password}
               </label>
               <div className="relative">
                 <input
@@ -138,10 +131,10 @@ export default function LoginPage() {
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  جاري الدخول...
+                  {locale === 'ar' ? 'جاري الدخول...' : 'Signing in...'}
                 </span>
               ) : (
-                t.auth.signIn
+                t.signIn
               )}
             </button>
           </form>
@@ -165,7 +158,7 @@ export default function LoginPage() {
               href="/register"
               className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
             >
-              {t.auth.signUp}
+              {t.signUp}
             </a>
           </p>
         </div>
