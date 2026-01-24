@@ -6,6 +6,7 @@ import type { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
 import { useLocaleContext } from '@/context/LocaleContext';
+import { apiFetch } from '@/lib/api';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -26,31 +27,16 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
-    try {
-      const response = await fetch(
-        'https://week1-backend.onrender.com/api/auth/login/',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || t.error);
-        return;
-      }
-
-      const { user } = data;
+     try {
+      const data = await apiFetch('/api/auth/login/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
       
-      console.log('user from API', user);
-      setAuth(user.email);
-      console.log('store after login', useAuthStore.getState());
 
-
+      const { user } = data;
       if (!user) {
         setError(t.error);
         return;

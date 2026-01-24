@@ -33,14 +33,17 @@ export default function SettingsPage() {
     }
   }, [isLoggedIn, router]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const fieldValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+
     setSettings((prev) => ({
       ...prev,
       [name]: fieldValue,
     }));
   };
+
 
   const handleSave = async () => {
     setIsSaving(true);

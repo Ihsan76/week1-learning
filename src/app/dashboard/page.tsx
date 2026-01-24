@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
+import { apiFetch } from '@/lib/api';
 
 import { useLocaleContext } from '@/context/LocaleContext';
 
@@ -25,7 +26,7 @@ export default function DashboardPage() {
 
   const { locale, dict, isLoading } = useLocaleContext();
 
- 
+
   const [mounted, setMounted] = useState(false);
   const [courses, setCourses] = useState<Course[]>([]);
   const [loadingCourses, setLoadingCourses] = useState(false);
@@ -51,29 +52,22 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!mounted || !isLoggedIn || !dict) return;
 
-    const fetchCourses = async () => {
+    async function fetchCourses() {
       setLoadingCourses(true);
       setCourseError('');
-
       try {
-        const res = await fetch('https://week1-backend.onrender.com/api/courses/');
-        const data = await res.json();
-
-        if (!res.ok) {
-          setCourseError(dict.dashboard.errorLoadingCourses);
-          return;
-        }
-
-        setCourses(data);
+        const courses = await apiFetch('/api/courses/');
+        setCourses(courses);
       } catch (err) {
         setCourseError(dict.dashboard.errorLoadingCourses);
-      } finally {
+        return;
+      }
+      finally {
         setLoadingCourses(false);
       }
-    };
-
-    fetchCourses();
-  }, [mounted, isLoggedIn, dict]);
+    }
+      fetchCourses();
+    }, [mounted, isLoggedIn, dict]);
 
   if (!mounted || isLoading || !dict) {
     return (
@@ -84,7 +78,7 @@ export default function DashboardPage() {
       </div>
     );
   }
-  
+
   const t = dict.dashboard;
 
   const completedCount = 0;
@@ -136,9 +130,9 @@ export default function DashboardPage() {
   };
 
   return (
-    
+
     <div className="container">
-   
+
       {/* Header */}
       <section className="section">
         <div className="flex justify-between items-center mb-8">
