@@ -65,12 +65,6 @@ export default function UsersPage() {
         : !user.is_active
   );
 
-  const handleDeleteLocal = (id: number) => {
-    // لاحقاً نربطه مع DELETE من الـ backend
-
-    setUsers((prev) => prev.filter((user) => user.id !== id));
-  };
-
   const handleDelete = async (id: number) => {
     try {
       await apiFetch(`/api/auth/users/${id}/delete/`, {
@@ -113,8 +107,8 @@ export default function UsersPage() {
           <button
             onClick={() => setFilter('all')}
             className={`px-4 py-2 rounded-lg transition ${filter === 'all'
-                ? 'bg-cyan-600 text-white'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+              ? 'bg-cyan-600 text-white'
+              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
               }`}
           >
             الكل ({users.length})
@@ -122,8 +116,8 @@ export default function UsersPage() {
           <button
             onClick={() => setFilter('active')}
             className={`px-4 py-2 rounded-lg transition ${filter === 'active'
-                ? 'bg-green-600 text-white'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+              ? 'bg-green-600 text-white'
+              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
               }`}
           >
             نشط ({users.filter((u) => u.is_active).length})
@@ -131,8 +125,8 @@ export default function UsersPage() {
           <button
             onClick={() => setFilter('inactive')}
             className={`px-4 py-2 rounded-lg transition ${filter === 'inactive'
-                ? 'bg-red-600 text-white'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+              ? 'bg-red-600 text-white'
+              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
               }`}
           >
             غير نشط ({users.filter((u) => !u.is_active).length})
@@ -186,10 +180,10 @@ export default function UsersPage() {
                     <td className="px-6 py-4">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${user.role === 'admin'
-                            ? 'bg-purple-500/20 text-purple-300'
-                            : user.role === 'instructor'
-                              ? 'bg-blue-500/20 text-blue-300'
-                              : 'bg-slate-600 text-slate-300'
+                          ? 'bg-purple-500/20 text-purple-300'
+                          : user.role === 'instructor'
+                            ? 'bg-blue-500/20 text-blue-300'
+                            : 'bg-slate-600 text-slate-300'
                           }`}
                       >
                         {user.role === 'admin'
@@ -217,8 +211,8 @@ export default function UsersPage() {
                       ) : (
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-medium cursor-pointer ${user.is_active
-                              ? 'bg-green-500/20 text-green-300'
-                              : 'bg-red-500/20 text-red-300'
+                            ? 'bg-green-500/20 text-green-300'
+                            : 'bg-red-500/20 text-red-300'
                             }`}
                           onClick={() => setEditingId(user.id)}
                         >
@@ -226,15 +220,15 @@ export default function UsersPage() {
                         </span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-slate-400 text-sm">
+                    <td className="px-3 py-4 text-slate-400 text-sm">
                       {new Date(user.created_at).toLocaleDateString('ar-EG')}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-4">
                       <button
                         onClick={() => handleDelete(user.id)}
-                        className="px-4 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition"
+                        className="px-2 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition"
                       >
-                        حذف 
+                        حذف
                       </button>
                     </td>
                   </tr>
