@@ -17,5 +17,6 @@ export default function Portal({ children }: { children: React.ReactNode }) {
 
   if (!mounted || !container) return null;
 
-  return createPortal(children, container);
+  // Portal.tsx
+  return createPortal(children, document.body);
 }
