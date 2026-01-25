@@ -54,7 +54,7 @@ a {
     border-bottom: 2px solid var(--primary);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 50;
     box-shadow: 0 4px 20px rgba(0, 188, 212, 0.1);
   }
 
@@ -545,6 +545,7 @@ a {
   position: sticky;
   top: 0;
   align-self: flex-start;
+  z-index: 50;
 }
 
 .admin-content {
@@ -657,15 +658,16 @@ table tbody td {
   color: var(--foreground);
 }
 
-table button {
-  padding: 1.2rem 1rem;
+
+table td button{
+  padding: 0.6rem 0.8rem;
   background-color: rgba(255, 0, 85, 0.9);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
+
 
 table button:hover {
   background-color: rgb(255, 0, 85);
@@ -682,7 +684,7 @@ table button:hover {
   border-bottom: 2px solid var(--primary);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 50;
   box-shadow: 0 4px 20px rgba(0, 188, 212, 0.1);
 }
 
@@ -801,4 +803,8 @@ table button:hover {
   gap: 1rem;
   align-items: center;
   flex-wrap: wrap;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

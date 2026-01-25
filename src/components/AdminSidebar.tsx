@@ -4,7 +4,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useLocaleStore } from '@/lib/localeStore';
 
 import { useLocaleContext } from '@/context/LocaleContext';
 
@@ -20,10 +19,6 @@ export default function AdminSidebar() {
 
   if (isLoading || !dict) return null;
   const content = dict.admin;
-
-
-  
-
   const isActive = (href: string) => pathname === href;
 
   return (

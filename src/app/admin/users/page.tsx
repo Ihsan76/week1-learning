@@ -1,13 +1,13 @@
 // src/app/admin/users/page.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
 import { apiFetch } from '@/lib/api';
 import { useLocaleContext } from '@/context/LocaleContext';
-import Portal from '@/components/Portal';
 
+import EditUserModal from '@/components/EditUserModal';
 
 interface User {
   id: number;
@@ -35,12 +35,15 @@ export default function UsersPage() {
   const [savingEdit, setSavingEdit] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
 
+  // ====== Drag state for modal ======
+  const [modalPos, setModalPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const dragOffset = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+
   // حماية الصفحة
   useEffect(() => {
     setIsMounted(true);
-    if (!isLoggedIn) {
-      router.push('/login');
-    }
+    if (!isLoggedIn) router.push('/login');
   }, [isLoggedIn, router]);
 
   // جلب المستخدمين
@@ -53,7 +56,7 @@ export default function UsersPage() {
       try {
         const data: User[] = await apiFetch('/api/auth/users/');
         setUsers(data);
-      } catch (err) {
+      } catch {
         setError(dict!.admin.usersContent.errorLoadingUsers);
       } finally {
         setLoading(false);
@@ -63,18 +66,7 @@ export default function UsersPage() {
     fetchUsers();
   }, [isMounted, isLoggedIn, dict, isLoading]);
 
-  // قفل سكرول الخلفية عند فتح المودال
-  useEffect(() => {
-    if (editingUser) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [editingUser]);
-
+  // قفل سكرول لوحة الإدارة (admin-main) عند فتح المودال
   useEffect(() => {
     const adminMain = document.getElementById('admin-main') as HTMLElement | null;
     if (!adminMain) return;
@@ -89,7 +81,40 @@ export default function UsersPage() {
     };
   }, [editingUser]);
 
+  // ESC لإغلاق المودال
+  useEffect(() => {
+    if (!editingUser) return;
 
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeEditModal();
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editingUser]);
+
+  // Mouse move/up للسحب
+  useEffect(() => {
+    if (!dragging) return;
+
+    const onMove = (e: MouseEvent) => {
+      setModalPos({
+        x: e.clientX - dragOffset.current.x,
+        y: e.clientY - dragOffset.current.y,
+      });
+    };
+
+    const onUp = () => setDragging(false);
+
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+  }, [dragging]);
 
   if (!dict || !isMounted || isLoading) {
     return (
@@ -102,11 +127,7 @@ export default function UsersPage() {
   const content = dict.admin.usersContent;
 
   const filteredUsers = users.filter((user) =>
-    filter === 'all'
-      ? true
-      : filter === 'active'
-        ? user.is_active
-        : !user.is_active
+    filter === 'all' ? true : filter === 'active' ? user.is_active : !user.is_active
   );
 
   const handleDelete = async (id: number) => {
@@ -119,14 +140,18 @@ export default function UsersPage() {
     }
   };
 
-  const openEditModal = (user: User) => setEditingUser(user);
-  const closeEditModal = () => setEditingUser(null);
+  const openEditModal = (user: User) => {
+    setEditingUser(user);
+    setModalPos({ x: 0, y: 0 }); // ابدأ من المنتصف كل مرة
+  };
+
+  const closeEditModal = () => {
+    setEditingUser(null);
+    setDragging(false);
+  };
 
   const handleEditFieldChange = (
-    field: keyof Pick<
-      User,
-      'full_name' | 'role' | 'language' | 'timezone' | 'is_active'
-    >,
+    field: keyof Pick<User, 'full_name' | 'role' | 'language' | 'timezone' | 'is_active'>,
     value: string | boolean
   ) => {
     if (!editingUser) return;
@@ -135,8 +160,10 @@ export default function UsersPage() {
 
   const handleSaveEdit = async () => {
     if (!editingUser) return;
+
     setSavingEdit(true);
     setError('');
+
     try {
       const payload = {
         full_name: editingUser.full_name,
@@ -145,13 +172,12 @@ export default function UsersPage() {
         timezone: editingUser.timezone,
         is_active: editingUser.is_active,
       };
-      const updated: User = await apiFetch(
-        `/api/auth/users/${editingUser.id}/update/`,
-        {
-          method: 'PATCH',
-          body: JSON.stringify(payload),
-        }
-      );
+
+      const updated: User = await apiFetch(`/api/auth/users/${editingUser.id}/update/`, {
+        method: 'PATCH',
+        body: JSON.stringify(payload),
+      });
+
       setUsers((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
       closeEditModal();
     } catch (err) {
@@ -166,9 +192,7 @@ export default function UsersPage() {
     <div className="min-h-screen bg-slate-900 p-8 relative">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
-            {content.title}
-          </h1>
+          <h1 className="text-4xl font-bold text-white mb-2">{content.title}</h1>
           <p className="text-slate-400">{content.description}</p>
         </div>
 
@@ -241,6 +265,7 @@ export default function UsersPage() {
                   </th>
                 </tr>
               </thead>
+
               <tbody>
                 {filteredUsers.map((user, idx) => (
                   <tr
@@ -251,9 +276,7 @@ export default function UsersPage() {
                     <td className="px-6 py-4 text-white">
                       {user.full_name || user.email.split('@')[0]}
                     </td>
-                    <td className="px-6 py-4 text-slate-300">
-                      {user.email}
-                    </td>
+                    <td className="px-6 py-4 text-slate-300">{user.email}</td>
                     <td className="px-6 py-4">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${user.role === 'admin'
@@ -304,135 +327,35 @@ export default function UsersPage() {
           )}
         </div>
       </div>
+      
 
-      {editingUser && (
-        <Portal>
-          <div className="w-[min(680px,92vw)] rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl">
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4">
-              <h2 className="text-lg font-semibold text-white">{content.editUserTitle}</h2>
-              <button
-                onClick={closeEditModal}
-                className="h-9 w-9 rounded-lg grid place-items-center text-slate-300 hover:bg-slate-800 hover:text-white"
-                disabled={savingEdit}
-                aria-label="Close"
-              >
-                ×
-              </button>
-            </div>
+      {/* ===== Modal (Portal) ===== */}
+      <EditUserModal
+  open={!!editingUser}
+  user={editingUser}
+  saving={savingEdit}
+  labels={{
+    title: content.editUserTitle,
+    email: content.email,
+    fullName: content.name,
+    role: content.role,
+    status: content.status,
+    language: content.Language,
+    timezone: content.timezone,
+    active: content.active,
+    inactive: content.inactive,
+    student: content.student,
+    instructor: content.instructor,
+    admin: content.admin,
+    cancel: content.cancel,
+    save: content.saveChanges,
+    saving: content.saving,
+  }}
+  onClose={closeEditModal}
+  onSave={handleSaveEdit}
+  onChange={(field, value) => handleEditFieldChange(field, value as any)}
+/>
 
-            {/* Body */}
-            <div className="px-6 py-5 max-h-[70vh] overflow-y-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Email (full) */}
-                <div className="md:col-span-2">
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    {content.email}
-                  </label>
-                  <input
-                    type="email"
-                    value={editingUser.email}
-                    readOnly
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-300"
-                  />
-                </div>
-
-                {/* Full name */}
-                <div className="md:col-span-2">
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    {content.name}
-                  </label>
-                  <input
-                    type="text"
-                    value={editingUser.full_name}
-                    onChange={(e) => handleEditFieldChange('full_name', e.target.value)}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
-                  />
-                </div>
-
-                {/* Role */}
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    {content.role}
-                  </label>
-                  <select
-                    value={editingUser.role}
-                    onChange={(e) => handleEditFieldChange('role', e.target.value as User['role'])}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
-                  >
-                    <option value="student">{content.student}</option>
-                    <option value="instructor">{content.instructor}</option>
-                    <option value="admin">{content.admin}</option>
-                  </select>
-                </div>
-
-                {/* Status */}
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    {content.status}
-                  </label>
-                  <select
-                    value={editingUser.is_active ? 'active' : 'inactive'}
-                    onChange={(e) => handleEditFieldChange('is_active', e.target.value === 'active')}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
-                  >
-                    <option value="active">{content.active}</option>
-                    <option value="inactive">{content.inactive}</option>
-                  </select>
-                </div>
-
-                {/* Language */}
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    {content.Language}
-                  </label>
-                  <select
-                    value={editingUser.language}
-                    onChange={(e) => handleEditFieldChange('language', e.target.value)}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
-                  >
-                    <option value="ar">العربية</option>
-                    <option value="en">English</option>
-                  </select>
-                </div>
-
-                {/* Timezone */}
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    {content.timezone}
-                  </label>
-                  <input
-                    type="text"
-                    value={editingUser.timezone}
-                    onChange={(e) => handleEditFieldChange('timezone', e.target.value)}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="flex items-center justify-end gap-2 border-t border-slate-800 px-6 py-4 bg-slate-950/60">
-              <button
-                onClick={closeEditModal}
-                className="rounded-lg bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
-                disabled={savingEdit}
-              >
-                {content.cancel}
-              </button>
-              <button
-                onClick={handleSaveEdit}
-                className="rounded-lg bg-cyan-600 px-4 py-2 text-sm text-white hover:bg-cyan-700 disabled:opacity-60"
-                disabled={savingEdit}
-              >
-                {savingEdit ? content.saving : content.saveChanges}
-              </button>
-            </div>
-          </div>
-
-
-        </Portal>
-      )}
     </div>
   );
 }

@@ -1,3 +1,5 @@
+// src/components/Portal.tsx
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -5,12 +7,15 @@ import { createPortal } from 'react-dom';
 
 export default function Portal({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
 
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
+  useEffect(() => {
+    const modalRoot = document.getElementById('modal-root');
+    setContainer(modalRoot || document.body);
+    setMounted(true);
+  }, []);
 
-  const root = document.getElementById('modal-root');
-  if (!root) return null;
+  if (!mounted || !container) return null;
 
-  return createPortal(children, root);
+  return createPortal(children, container);
 }

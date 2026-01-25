@@ -28,6 +28,8 @@ export default function AdminLayout({
         <div id="modal-root" />
         {children}
       </main>
+      {/* Modal root خارج main (خارج scroll container) */}
+      <div id="modal-root" />
     </div>
     
   );
