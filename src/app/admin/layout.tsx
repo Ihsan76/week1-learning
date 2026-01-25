@@ -24,7 +24,8 @@ export default function AdminLayout({
     
       <AdminSidebar />
       </aside>  
-      <main className="flex-1">
+      <main id="admin-main" className="flex-1">
+        <div id="modal-root" />
         {children}
       </main>
     </div>
