@@ -2,7 +2,11 @@
 import type { Metadata } from 'next'
 import Navbar from "@/components/Navbar"
 // import LocaleProvider from '@/components/LocaleProvider'  // ✅ استيراد صحيح
-import './globals.css'
+
+import './globals.css';
+import '../styles/form.css';
+import '../styles/animations.css';
+
 import { LocaleProvider } from '@/context/LocaleContext';
 
 export const metadata: Metadata = {

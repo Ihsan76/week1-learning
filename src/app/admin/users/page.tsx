@@ -7,8 +7,8 @@ import { useAuthStore } from '@/lib/store';
 import { apiFetch } from '@/lib/api';
 import { useLocaleContext } from '@/context/LocaleContext';
 
-import EditUserModal from '@/components/EditUserModal';
-
+// import EditUserModal from '@/components/EditUserModal/EditUserModal';
+import EditUserModal from '@/components/EditUserModal/EditUserModal';
 interface User {
   id: number;
   email: string;
@@ -350,6 +350,10 @@ export default function UsersPage() {
     cancel: content.cancel,
     save: content.saveChanges,
     saving: content.saving,
+    unsavedTitle: content.unsavedTitle,
+    unsavedText: content.unsavedText,
+    stay: content.stay,
+    discard: content.discard
   }}
   onClose={closeEditModal}
   onSave={handleSaveEdit}

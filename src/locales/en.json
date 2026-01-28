@@ -373,7 +373,11 @@
       "timezone": "Timezone",
       "cancel": "Cancel",
       "saveing": "Saving...",
-      "saveChanges": "Save Changes"
+      "saveChanges": "Save Changes",
+       "unsavedTitle": "Unsaved Changes",
+      "unsavedText": "You have unsaved changes. Do you want to exit without saving?",
+      "stay": "Stay",
+      "discard": "Discard Changes"
   }
   }
 }
