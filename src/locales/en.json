@@ -67,7 +67,10 @@
   "auth": {
     "login": "Sign In",
     "register": "Create Account",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
     "email": "Email Address",
+    "emailExists": "This email is already registered",
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "submit": "Sign Up",

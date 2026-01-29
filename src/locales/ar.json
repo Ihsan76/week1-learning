@@ -67,7 +67,10 @@
   "auth": {
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
     "email": "البريد الإلكتروني",
+    "emailExists": "هذا البريد مسجّل مسبقًا",
     "password": "كلمة المرور",
     "confirmPassword": "تأكيد كلمة المرور",
     "submit": "تسجيل",
