@@ -29,16 +29,19 @@
 ### التثبيت
 ```bash
 npm install
+```
 إعداد متغيرات البيئة
 أنشئ ملف .env.local:
 
 ```bash
 NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
+```
 عند ربطك بـ Render استخدم رابط السيرفر في متغيرات بيئة Vercel.
 
 التشغيل
 ```bash
 npm run dev
+```
 ثم افتح:
 
 http://localhost:3000
