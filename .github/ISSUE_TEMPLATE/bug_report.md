@@ -1,7 +1,4 @@
-## 3) قالب Issue (Bug) — Frontend
-ضعه في: `week1-learning/.github/ISSUE_TEMPLATE/bug_report.md`
 
-```md
 ---
 name: Bug report
 about: الإبلاغ عن مشكلة في الواجهة

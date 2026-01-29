@@ -10,14 +10,18 @@
 1) ثبّت الاعتمادات:
 ```bash
 npm install
+
+```
 أنشئ .env.local:
 
-bash
+```bash
 NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
+```
 شغّل:
 
-bash
+```bash
 npm run dev
+```
 أسلوب العمل (Workflow)
 افتح Issue أولًا (Bug/Feature) قبل التغيير الكبير.
 
