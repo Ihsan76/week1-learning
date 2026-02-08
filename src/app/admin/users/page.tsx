@@ -43,7 +43,7 @@ export default function UsersPage() {
   // حماية الصفحة
   useEffect(() => {
     setIsMounted(true);
-    if (!isLoggedIn) router.push('/login');
+    if (!isLoggedIn) router.push('/academy/login');
   }, [isLoggedIn, router]);
 
   // جلب المستخدمين

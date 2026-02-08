@@ -48,7 +48,7 @@ export default function ReportsPage() {
   useEffect(() => {
     setIsMounted(true);
     if (!isLoggedIn) {
-      router.push('/login');
+      router.push('/academy/login');
     }
   }, [isLoggedIn, router]);
 

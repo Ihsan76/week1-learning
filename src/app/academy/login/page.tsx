@@ -1,4 +1,5 @@
-// src/app/login/page.tsx
+// src/app/academy/login/page.tsx
+
 'use client';
 
 import { useState } from 'react';
@@ -43,7 +44,7 @@ export default function LoginPage() {
       }
 
       setAuth(user.email);
-      router.push('/dashboard');
+      router.push('/academy/dashboard');
     } catch (err) {
       setError(t.error);
     } finally {

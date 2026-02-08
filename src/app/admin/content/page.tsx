@@ -1,3 +1,5 @@
+// src/app/admin/content/page.tsx
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -52,7 +54,7 @@ export default function ContentPage() {
   useEffect(() => {
     setIsMounted(true);
     if (!isLoggedIn) {
-      router.push('/login');
+      router.push('/academy/login');
     }
   }, [isLoggedIn, router]);
 

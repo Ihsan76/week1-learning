@@ -68,7 +68,7 @@ export default function RegisterPage() {
 
       // 3) Save auth + redirect
       login(user.email); // نفس اللي تستخدمه بصفحة login عندك [file:186]
-      router.push('/dashboard');
+      router.push('/academy/dashboard');
     } catch (err: any) {
 
       const msg = err?.data?.error ||   // من DRF: {"error": "..."} [file:188]
@@ -102,7 +102,7 @@ export default function RegisterPage() {
             <h1 className="text-3xl font-bold text-white">{t.register}</h1>
             <p className="text-gray-300 text-sm">
               {t.haveAccount}{' '}
-              <Link href="/login" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
+              <Link href="/academy/login" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
                 {t.signIn}
               </Link>
             </p>

@@ -1,8 +1,12 @@
+// src/app/admin/settings/page.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
 import { useAuthStore } from '@/lib/store';
+import { useLocaleContext } from '@/context/LocaleContext';
 
 interface SettingsForm {
   siteName: string;
@@ -14,11 +18,15 @@ interface SettingsForm {
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { isLoggedIn } = useAuthStore((state) => state);
+
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const { dict, isLoading } = useLocaleContext();
+
+  // hooks لازم تكون دائمًا قبل أي return
   const [isMounted, setIsMounted] = useState(false);
   const [settings, setSettings] = useState<SettingsForm>({
-    siteName: 'Week1 Learning',
-    siteDescription: 'Learn web development with practical examples',
+    siteName: '',
+    siteDescription: '',
     maintenanceMode: false,
     theme: 'auto',
     defaultLanguage: 'ar',
@@ -28,22 +36,39 @@ export default function SettingsPage() {
 
   useEffect(() => {
     setIsMounted(true);
-    if (!isLoggedIn) {
-      router.push('/login');
-    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) router.push('/academy/login');
   }, [isLoggedIn, router]);
 
+  // تعبئة الإعدادات بعد وصول dict (مرة/كل تغيير لغة)
+  useEffect(() => {
+    if (!dict) return;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const content = dict.admin.settingsContent;
+
+    setSettings((prev) => ({
+      ...prev,
+      siteName: content.siteName ?? prev.siteName,
+      siteDescription: content.siteDescription ?? prev.siteDescription,
+      theme: (content.theme as SettingsForm['theme']) ?? prev.theme,
+      defaultLanguage: content.defaultLanguage ?? prev.defaultLanguage,
+    }));
+  }, [dict]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type } = e.target;
-    const fieldValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    const fieldValue =
+      type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
 
     setSettings((prev) => ({
       ...prev,
       [name]: fieldValue,
     }));
   };
-
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -56,14 +81,19 @@ export default function SettingsPage() {
     }
   };
 
+  // شروط العرض تأتي بعد تعريف كل hooks
   if (!isMounted) return null;
+  if (!isLoggedIn) return null;
+  if (isLoading || !dict) return null;
+
+  const content = dict.admin.settingsContent;
 
   return (
     <div className="min-h-screen bg-slate-900 p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">الإعدادات</h1>
-          <p className="text-slate-400">Manage system settings and preferences</p>
+          <h1 className="text-4xl font-bold text-white mb-2">{content.title}</h1>
+          <p className="text-slate-400">{content.description}</p>
         </div>
 
         {successMessage && (
@@ -74,11 +104,12 @@ export default function SettingsPage() {
 
         <div className="bg-slate-800 border border-slate-700 rounded-lg p-6 space-y-6">
           <div>
-            <h2 className="text-xl font-semibold text-white mb-4">عام</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">{content.class}</h2>
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
-                  اسم الموقع
+                  {content.siteNameLabel}
                 </label>
                 <input
                   type="text"
@@ -88,9 +119,10 @@ export default function SettingsPage() {
                   className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
-                  وصف الموقع
+                  {content.siteDescriptionLabel}
                 </label>
                 <textarea
                   name="siteDescription"
@@ -100,9 +132,10 @@ export default function SettingsPage() {
                   className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500"
                 />
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
-                  الثيم
+                  {content.selectTheme}
                 </label>
                 <select
                   name="theme"
@@ -110,14 +143,15 @@ export default function SettingsPage() {
                   onChange={handleChange}
                   className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500"
                 >
-                  <option value="light">Light</option>
-                  <option value="dark">Dark</option>
-                  <option value="auto">Auto</option>
+                  <option value="light">{content.light}</option>
+                  <option value="dark">{content.dark}</option>
+                  <option value="auto">{content.auto}</option>
                 </select>
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
-                  اللغة الافتراضية
+                  {content.defaultLanguageLabel}
                 </label>
                 <select
                   name="defaultLanguage"
@@ -129,15 +163,27 @@ export default function SettingsPage() {
                   <option value="en">English</option>
                 </select>
               </div>
+
+              <div className="mt-6">
+                <h3 className="text-lg font-bold mb-2">{content.langageTranslations}</h3>
+                <p className="text-sm text-slate-400 mb-3">{content.manageLanguages}</p>
+
+                <Link
+                  href="/admin/languages"
+                  className="btn-primary inline-block px-4 py-2"
+                >
+                  {content.manageLanguagesButton}
+                </Link>
+              </div>
             </div>
           </div>
 
           <div className="border-t border-slate-700 pt-6">
-            <h2 className="text-xl font-semibold text-white mb-4">الأمان</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">{content.security}</h2>
             <div className="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
               <div>
-                <p className="text-white font-medium">وضع الصيانة</p>
-                <p className="text-sm text-slate-400">تعطيل الموقع مؤقتاً</p>
+                <p className="text-white font-medium">{content.maintenanceModeLabel}</p>
+                <p className="text-sm text-slate-400">{content.maintenanceModeDescription}</p>
               </div>
               <input
                 type="checkbox"
@@ -156,7 +202,7 @@ export default function SettingsPage() {
             disabled={isSaving}
             className="px-6 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition disabled:opacity-50"
           >
-            {isSaving ? 'جاري الحفظ...' : 'حفظ الإعدادات'}
+            {content.isSaving }
           </button>
         </div>
       </div>

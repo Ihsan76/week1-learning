@@ -10,10 +10,8 @@ import {
 } from '@/locales/i18n';
 
 export function useLocale() {
-  const [locale, setLocale] = useState<Locale>(
-    defaultLanguage.code as Locale
-  );
-  const [dict, setDict] = useState<any | null>(null);
+  const [locale, setLocale] = useState<Locale>(defaultLanguage.code as Locale);
+  const [dict, setDict] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // تحديد اللغة الأولية مرة واحدة
@@ -21,6 +19,7 @@ export function useLocale() {
     if (typeof window === 'undefined') return;
 
     const saved = window.localStorage.getItem('locale') as Locale | null;
+
     const initial =
       saved && enabledLanguages.find((l) => l.code === saved)
         ? saved
@@ -37,10 +36,10 @@ export function useLocale() {
 
     const load = async () => {
       setIsLoading(true);
+
       const d = await getDictionary(locale);
-      
       if (cancelled) return;
-      
+
       setDict(d);
       setIsLoading(false);
 
@@ -58,12 +57,10 @@ export function useLocale() {
     };
   }, [locale]);
 
-  const changeLocale = async (next: Locale) => {
-    // حفظ في localStorage أولاً
+  const changeLocale = (next: Locale) => {
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('locale', next);
     }
-    // ثم تغيير locale (يؤدي لتشغيل useEffect)
     setLocale(next);
   };
 

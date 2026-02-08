@@ -19,18 +19,14 @@ export default function AdminLayout({
   if (!mounted) return null;
 
   return (
-    <div className="admin-layout">
-       <aside className="admin-sidebar">
-    
-      <AdminSidebar />
-      </aside>  
-      <main id="admin-main" className="flex-1">
-        <div id="modal-root" />
-        {children}
-      </main>
-      {/* Modal root خارج main (خارج scroll container) */}
-      <div id="modal-root" />
-    </div>
-    
-  );
+  <div className="admin-layout flex w-full min-h-screen">
+    <AdminSidebar />
+
+    <main id="admin-main" className="flex-1 min-w-0 w-full">
+      {children}
+    </main>
+  </div>
+);
+
+
 }

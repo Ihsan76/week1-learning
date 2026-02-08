@@ -1,4 +1,4 @@
-// src/app/dashboard/page.tsx
+// src/app/academy/dashboard/page.tsx
 
 'use client';
 
@@ -44,7 +44,7 @@ export default function DashboardPage() {
   // حماية بسيطة: توجيه لصفحة الدخول إذا لم يكن المستخدم مسجلاً
   useEffect(() => {
     if (mounted && !isLoggedIn) {
-      router.push('/login');
+      router.push('/academy/login');
     }
   }, [mounted, isLoggedIn, router]);
 
@@ -87,7 +87,7 @@ export default function DashboardPage() {
 
   const handleLogout = () => {
     logout();
-    router.push('/login');
+    router.push('/academy/login');
   };
 
   const handleCreateCourse = async (e: React.FormEvent) => {

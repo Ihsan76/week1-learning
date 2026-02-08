@@ -20,6 +20,8 @@ interface AdminItem {
   icon?: string;
 }
 
+
+
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -31,10 +33,23 @@ export default function Navbar() {
 
   const [mounted, setMounted] = useState(false);
   const [showAdminDropdown, setShowAdminDropdown] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const [adminOpenMobile, setAdminOpenMobile] = useState(false);
+
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+
+  useEffect(() => {
+  setMobileOpen(false);
+  setShowAdminDropdown(false);
+  setAdminOpenMobile(false);
+}, [pathname]);
+
+
 
   if (!mounted || isLoading || !dict) return null;
 
@@ -45,12 +60,12 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    router.push('/login');
+    router.push('/academy/login');
   };
 
   const navItemsLoggedIn: { href: string; key: NavKey }[] = [
     { href: '/', key: 'home' },
-    { href: '/dashboard', key: 'dashboard' },
+    { href: '/academy/dashboard', key: 'dashboard' },
     { href: '/settings', key: 'settings' },
     { href: '/weeks', key: 'weeks' },
     { href: '/resources', key: 'resources' },
@@ -60,8 +75,8 @@ export default function Navbar() {
     { href: '/', key: 'home' },
     { href: '/weeks', key: 'weeks' },
     { href: '/resources', key: 'resources' },
-    { href: '/login', key: 'login' },
-    { href: '/register', key: 'register' },
+    { href: '/academy/login', key: 'login' },
+    { href: '/academy/register', key: 'register' },
   ];
 
   const adminItems: AdminItem[] = [
@@ -84,11 +99,27 @@ export default function Navbar() {
           <span className="logo-icon">👋</span>
           <span className="logo-text">Week1 Learning</span>
         </Link>
+        <button
+          type="button"
+          className="nav-burger"
+          aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen(v => !v)}
+        >
+          ☰
+        </button>
+        
+        <div className={`nav-mobilePanel ${mobileOpen ? "is-open" : ""}`}>
+          {/* Navigation Items */}
+          <div className="nav-mobileHeader">
+  <span className="nav-mobileTitle">
+    {locale === "ar" ? "القائمة" : "Menu"}
+  </span>
+</div>
 
-        {/* Navigation Items */}
-        <div className="nav-items">
-          {isLoggedIn
-            ? navItemsLoggedIn.map((item) => (
+          <div className="nav-items">
+            {isLoggedIn
+              ? navItemsLoggedIn.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -97,7 +128,7 @@ export default function Navbar() {
                   {translations[item.key]}
                 </Link>
               ))
-            : navItemsGuest.map((item) => (
+              : navItemsGuest.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -107,46 +138,95 @@ export default function Navbar() {
                 </Link>
               ))}
 
-          {/* Admin Dropdown */}
-          {isLoggedIn && (
-            <div className="nav-dropdown-wrapper">
-              <button
-                className="nav-link2 admin-toggle"
-                onClick={() => setShowAdminDropdown(!showAdminDropdown)}
-              >
-                {translations.admin}
-              </button>
-              {showAdminDropdown && (
-                <div className="nav-dropdown-menu">
-                  {adminItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`dropdown-item ${isActive(item.href) ? 'active' : ''}`}
-                      onClick={() => setShowAdminDropdown(false)}
-                    >
-                      {item.icon && <span className="dropdown-icon">{item.icon}</span>}
-                      <span>{item.label[locale as 'ar' | 'en']}</span>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+            {/* Admin Dropdown */}
+            {isLoggedIn && (
+  <div className="nav-admin">
+    {/* Desktop dropdown button */}
+    <button
+      type="button"
+      className="nav-link2 admin-toggle admin-desktopToggle"
+      onClick={() => setShowAdminDropdown(v => !v)}
+      aria-expanded={showAdminDropdown}
+    >
+      {translations.admin}
+    </button>
 
-        {/* Right Actions */}
-        <div className="nav-actions">
-          {isLoggedIn && (
-            <button onClick={handleLogout} className="btn-logout">
-              {translations.logout || 'Logout'}
-            </button>
-          )}
-          <button onClick={toggleLocale} className="btn-language" aria-label="Toggle language">
-            {locale === 'ar' ? '😄 EN' : '🌠 AR'}
-          </button>
-        </div>
+    {showAdminDropdown && (
+      <div className="nav-dropdown-menu admin-desktopMenu">
+        {adminItems.map(item => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`dropdown-item ${isActive(item.href) ? "active" : ""}`}
+            onClick={() => setShowAdminDropdown(false)}
+          >
+            {item.icon && <span className="dropdown-icon">{item.icon}</span>}
+            <span>{item.label[locale as "ar" | "en"]}</span>
+          </Link>
+        ))}
       </div>
+    )}
+
+    {/* Mobile accordion */}
+    <button
+      type="button"
+      className="nav-link2 admin-toggle admin-mobileToggle"
+      onClick={() => setAdminOpenMobile(v => !v)}
+      aria-expanded={adminOpenMobile}
+    >
+      <span>{translations.admin}</span>
+      <span className={`chev ${adminOpenMobile ? "is-open" : ""}`}>▾</span>
+    </button>
+
+    {adminOpenMobile && (
+      <div className="admin-mobileMenu">
+        {adminItems.map(item => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`dropdown-item ${isActive(item.href) ? "active" : ""}`}
+            onClick={() => {
+              setAdminOpenMobile(false);
+              setMobileOpen(false); // يغلق قائمة الموبايل بعد اختيار عنصر
+            }}
+          >
+            {item.icon && <span className="dropdown-icon">{item.icon}</span>}
+            <span>{item.label[locale as "ar" | "en"]}</span>
+          </Link>
+        ))}
+      </div>
+    )}
+  </div>
+)}
+
+          </div>
+
+          {/* Right Actions */}
+          <div className="nav-actions">
+            {isLoggedIn && (
+              <button onClick={handleLogout} className="btn-logout">
+                {translations.logout || 'Logout'}
+              </button>
+            )}
+            <button onClick={toggleLocale} className="btn-language" aria-label="Toggle language">
+              {locale === 'ar' ? '😄 EN' : '🌠 AR'}
+            </button>
+          </div>
+        </div>
+       
+      </div>
+      {mobileOpen && (
+        <button
+          type="button"
+          className="nav-overlay"
+          aria-label="Close menu"
+          onClick={() => {
+            setMobileOpen(false);
+            setShowAdminDropdown(false);
+          }}
+        />
+      )}
+
     </nav>
   );
 }
